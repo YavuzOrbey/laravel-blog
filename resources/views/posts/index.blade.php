@@ -1,28 +1,15 @@
 @extends('main')
-
 @section('content')
 <div class="row">
   <div class="col-md-8">
+    @foreach ($posts as $post)
     <div class="blog-post">
-      <h3>Title</h3>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dolor reiciendis vero rem facere. Ex non id obcaecati ad in facere aliquam? Quibusdam libero a commodi, beatae repudiandae ipsam cumque!</p>
-      <a class="btn btn-primary" href="">Read More</a>
+        <h3>{{$post->title}}</h3>
+        <p>{{$post->body}}</p>
+        {!! Html::linkRoute('posts.show', 'Read More', array($post->id), array('class'=>'btn btn-primary')) !!}
     </div>
     <hr>
-    <div class="blog-post">
-        <h3>Title</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dolor reiciendis vero rem facere. Ex non id obcaecati ad in facere aliquam? Quibusdam libero a commodi, beatae repudiandae ipsam cumque!</p>
-        <a class="btn btn-primary" href="">Read More</a>
-      </div>
-      <hr>
-
-      <div class="blog-post">
-          <h3>Title</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dolor reiciendis vero rem facere. Ex non id obcaecati ad in facere aliquam? Quibusdam libero a commodi, beatae repudiandae ipsam cumque!</p>
-          <a class="btn btn-primary" href="">Read More</a>
-        </div>
-
-      <hr>
+    @endforeach
   </div>
 </div>
 @endsection

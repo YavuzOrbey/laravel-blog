@@ -26,10 +26,4 @@ class PagesController extends Controller{
         return view('pages.about', compact($full));
     }
 
-    public function getContact()
-    {
-        return view('pages.contact'); 
-    }
-
-
 }

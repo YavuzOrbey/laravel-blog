@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
+use App\Post;
+use Session;
 class PostController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        $posts = Post::all();
+        return view('posts.index',compact('posts'));
     }
 
     /**
@@ -34,7 +36,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate the data
+        $validatedData = $request->validate([
+            'title' => 'required|unique:posts|max:190',
+            'body' => 'required',
+        ]);
+
+        //store in database
+            $post = new Post;
+            $post->title = $request->input('title');
+            $post->body = $request->input('body');
+
+            $post->save();
+        //redirect to another page
+        //$request->session()->flash('success', 'Post successfully saved');
+        Session::flash('success', 'Blog successfully saved');
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
@@ -45,7 +62,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.show', compact('post'));
     }
 
     /**
