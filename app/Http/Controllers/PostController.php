@@ -14,8 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return view('posts.index',compact('posts'));
+        $posts = Post::all()->sortByDesc('created_at');
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -74,7 +74,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -86,7 +87,19 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|unique:posts|max:190',
+            'body' => 'required',
+        ]);
+
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+
+        $post->save();
+
+        Session::flash('success', 'Post successfully updated');
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**

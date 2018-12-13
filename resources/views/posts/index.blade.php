@@ -1,17 +1,28 @@
 @extends('main')
 @section('content')
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-10">
+    <h1>All Posts</h1>
+  </div>
+  <div class="col-md-2">
+      {!! Html::linkRoute('posts.create', 'Create New Post', null, array('class'=>'btn .btn-h1-spacing btn-lg btn-success')) !!}
+  </div>
+</div>
+
     @foreach ($posts as $post)
-    <div class="blog-post">
-        <h3>{{$post->title}}</h3>
-        <p>{{$post->body}}</p>
-        {!! Html::linkRoute('posts.show', 'Read More', array($post->id), array('class'=>'btn btn-primary')) !!}
+    <div class="row">
+        <div class="col-md-3">
+          <h5>{{$post->id}}. {{$post->title}}</h5>
+          {{date('M j, Y g:i A', strtotime($post->created_at))}}
+        </div>
+        <div class='col-md-9'>
+          <p>{{ substr($post->body, 0, 200)}}{{ strlen($post->body) > 200 ? "...": ""}} {!! Html::linkRoute('posts.show', 'View', array($post->id), array('class'=>'btn btn-outline-secondary btn-sm')) !!}
+          <a href="{{ route('posts.edit', $post->id)}}" class="btn btn-outline-secondary btn-sm">Edit</a></p>
+
+        </div>
     </div>
     <hr>
     @endforeach
-  </div>
-</div>
-@endsection
+@stop
 
 @section('title', '| Posts')
