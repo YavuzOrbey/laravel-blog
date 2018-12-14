@@ -20,10 +20,14 @@
             <dd>{{ date('M j, Y g:i A', strtotime($post->updated_at)) }}</dd>
            </dl>
            <hr>
+           {!! Form::open(['route'=> ['posts.destroy', $post->id], 'method'=>'DELETE'])!!}
            <div class="row">
                <div class="col-sm-6">{!! Html::linkRoute('posts.edit', 'Edit', array($post->id), array('class'=>'btn btn-primary btn-block')) !!}</div>
-               <div class="col-sm-6">{!! Html::linkRoute('posts.destroy', 'Delete', array($post->id), array('class'=>'btn btn-danger btn-block')) !!}</div>
-           </div>
+               <div class="col-sm-6">{{Form::submit('Delete', array('class'=>'btn btn-danger btn-block')) }}</div>
+               
+               
+            </div>
+            {!! Form::close() !!}
         </div>
     </div>
     </div>
