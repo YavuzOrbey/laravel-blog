@@ -14,26 +14,13 @@
 
 <div class="row">
   <div class="col-md-8">
-    <div class="blog-post">
-      <h3>Title</h3>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dolor reiciendis vero rem facere. Ex non id obcaecati ad in facere aliquam? Quibusdam libero a commodi, beatae repudiandae ipsam cumque!</p>
-      <a class="btn btn-primary" href="">Read More</a>
-    </div>
-    <hr>
-    <div class="blog-post">
-        <h3>Title</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dolor reiciendis vero rem facere. Ex non id obcaecati ad in facere aliquam? Quibusdam libero a commodi, beatae repudiandae ipsam cumque!</p>
-        <a class="btn btn-primary" href="">Read More</a>
+      @foreach ($posts as $post)
+      <div class="blog-post">
+            <h3>{{$post->title}}</h3>
+            <p>{{ substr($post->body, 0, 200)}}{{ strlen($post->body) > 200 ? "...": ""}} {!! Html::linkRoute('posts.show', 'Read more ', array($post->id), array('class'=>'btn btn-outline-secondary btn-sm')) !!}
       </div>
       <hr>
-
-      <div class="blog-post">
-          <h3>Title</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem dolor reiciendis vero rem facere. Ex non id obcaecati ad in facere aliquam? Quibusdam libero a commodi, beatae repudiandae ipsam cumque!</p>
-          <a class="btn btn-primary" href="">Read More</a>
-        </div>
-
-      <hr>
+      @endforeach
   </div>
   <div class="col-md-3 offset-md-1">sidebar</div>
 </div>

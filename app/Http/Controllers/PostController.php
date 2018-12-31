@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all()->sortByDesc('created_at');
+        $posts = Post::paginate(10);
         return view('posts.index', compact('posts'));
     }
 
@@ -40,11 +40,13 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|unique:posts|max:190',
             'body' => 'required',
+            'slug' => 'required|alpha_dash|unique:posts|min:5|max:190'
         ]);
 
         //store in database
             $post = new Post;
             $post->title = $request->input('title');
+            $post->slug = $request->input('slug');
             $post->body = $request->input('body');
 
             $post->save();

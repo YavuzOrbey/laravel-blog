@@ -1,7 +1,7 @@
 <?php 
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 class PagesController extends Controller{
     
 
@@ -14,7 +14,15 @@ class PagesController extends Controller{
         # recieve data back from model
         # compiple or process data from model if needed
         # pass data to correct view
-        return view('pages.welcome'); 
+
+        
+        /* 
+        $posts = Post::latest()->limit(3)->get();
+        I prefer the below method but the one above works just as well
+        */
+        $posts = DB::table('posts')->latest()->limit(3)->get();
+        
+        return view('pages.welcome', compact('posts')); 
     }
 
    

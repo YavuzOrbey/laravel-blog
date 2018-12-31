@@ -6,6 +6,7 @@
 <div class="row mt-2">
     <div class="col-md-8">
         <h3>{{$post->title}}</h3>
+        <h4>URL: {{$post->slug}}</h4>
         <p>{{$post->body}}</p>
     </div>
     <div class="col-md-4">
@@ -28,6 +29,7 @@
                
             </div>
             {!! Form::close() !!}
+            {!! Html::linkRoute('posts.index', '<< See all posts', null, array('class'=>'btn btn-outline-dark btn-h1-spacing')) !!}
         </div>
     </div>
     </div>

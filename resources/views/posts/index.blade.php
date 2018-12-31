@@ -23,6 +23,7 @@
     </div>
     <hr>
     @endforeach
+    <div class="text-center">{!! $posts->links() !!}</div>
 @stop
 
 @section('title', '| Posts')
