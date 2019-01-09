@@ -6,12 +6,15 @@
 <div class="row mt-2">
     <div class="col-md-8">
         <h3>{{$post->title}}</h3>
-        <h4>URL: {{$post->slug}}</h4>
         <p>{{$post->body}}</p>
     </div>
     <div class="col-md-4">
         <div class="card">
         <div class="card-body bg-light">
+            <dl class="dl-horizontal">
+                <dt>URL Slug:</dt>
+                <dd>{{url($post->slug)}}</dd>
+            </dl>
            <dl class="dl-horizontal">
             <dt>Created At</dt>
            <dd>{{date('M j, Y g:i A', strtotime($post->created_at))}}</dd>

@@ -40,7 +40,7 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|unique:posts|max:190',
             'body' => 'required',
-            'slug' => 'required|alpha_dash|unique:posts|min:5|max:190'
+            'slug' => 'required|alpha_dash|min:5|max:190|unique:posts'
         ]);
 
         //store in database
@@ -92,11 +92,13 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|unique:posts|max:190',
             'body' => 'required',
+            'slug' => 'required|alpha_dash|min:5|max:190|unique:posts'
         ]);
 
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->slug = $request->input('slug');
 
         $post->save();
 

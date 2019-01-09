@@ -12,6 +12,9 @@
         {{Form::label('title', 'Title:') }}
         {{Form::text('title', null, ['class'=>'form-control', 'placeholder'=>'Enter a Title',  'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
 
+        {{Form::label('slug', 'Slug:') }}
+        {{Form::text('slug', null, ['class'=>'form-control', 'placeholder'=>'Enter a Slug URL', 'required'=>'', 'minlength'=>5, 'maxlength'=>190] ) }}
+        
         {{Form::label('body', 'Body:', array('class'=> 'btn-h1-spacing')) }}
         {{Form::textarea('body', null, array('class'=>'form-control', 'placeholder'=>'What\'s on your mind?', 'required'=>'')) }}
     </div>
