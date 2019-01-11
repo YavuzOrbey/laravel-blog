@@ -20,7 +20,7 @@ class PagesController extends Controller{
         $posts = Post::latest()->limit(3)->get();
         I prefer the below method but the one above works just as well
         */
-        $posts = DB::table('posts')->latest()->limit(3)->get();
+        $posts = DB::table('posts')->get();
         
         return view('pages.welcome', compact('posts')); 
     }
