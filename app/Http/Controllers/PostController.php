@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(10);
+        $posts = Post::paginate(10); // testing ssh push
         return view('posts.index', compact('posts'));
     }
 
