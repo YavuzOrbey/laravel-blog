@@ -13,7 +13,7 @@
         <div class="card-body bg-light">
             <dl class="dl-horizontal">
                 <dt>URL Slug:</dt>
-                <dd>{{url($post->slug)}}</dd>
+            <dd><a href="{{route('blog.single', $post->slug)}}">{{url('blog', $post->slug)}}</a></dd>
             </dl>
            <dl class="dl-horizontal">
             <dt>Created At</dt>
