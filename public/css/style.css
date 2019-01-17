@@ -1,3 +1,6 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
 .btn-h1-spacing {
     margin-top: 10px;
 }
@@ -6,4 +9,7 @@
 }
 .dropdown-menu {
     min-width: 16rem;
+}
+.blog-post > h3 {
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }

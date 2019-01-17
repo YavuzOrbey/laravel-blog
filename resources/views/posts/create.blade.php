@@ -4,15 +4,7 @@
 @endsection
 @section('content')
     <div class="row justify-content-center">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+        
         <div class="col-md-8"><h1>Create New Post</h1></div>
         <div class="col-md-12">
             {!! Form::open(['route' => 'posts.store', 'data-parsley-validate'=>'']) !!}

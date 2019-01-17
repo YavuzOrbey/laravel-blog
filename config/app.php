@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Yavuz Orbey'),
 
     /*
     |--------------------------------------------------------------------------
@@ -169,11 +169,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        YavuzOrbey\Providers\AppServiceProvider::class,
+        YavuzOrbey\Providers\AuthServiceProvider::class,
+        // YavuzOrbey\Providers\BroadcastServiceProvider::class,
+        YavuzOrbey\Providers\EventServiceProvider::class,
+        YavuzOrbey\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
     ],
