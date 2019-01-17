@@ -1,6 +1,6 @@
 <?php
 
-namespace YavuzOrbey;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 

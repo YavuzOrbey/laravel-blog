@@ -1,9 +1,9 @@
 <?php
 
-namespace YavuzOrbey\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use YavuzOrbey\Http\Requests;
+use App\Http\Requests;
 class ContactController extends Controller
 {
     public function create()

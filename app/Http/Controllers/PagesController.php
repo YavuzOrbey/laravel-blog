@@ -1,6 +1,6 @@
 <?php 
 
-namespace YavuzOrbey\Http\Controllers;
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 class PagesController extends Controller{
     

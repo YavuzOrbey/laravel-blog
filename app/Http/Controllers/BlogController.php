@@ -1,9 +1,9 @@
 <?php
 
-namespace YavuzOrbey\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use YavuzOrbey\Post;
+use App\Post;
 
 class BlogController extends Controller
 {

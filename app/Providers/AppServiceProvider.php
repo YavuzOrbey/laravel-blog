@@ -1,6 +1,6 @@
 <?php
 
-namespace YavuzOrbey\Providers;
+namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;

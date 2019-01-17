@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => YavuzOrbey\User::class,
+            'model' => App\User::class,
         ],
 
         // 'users' => [
