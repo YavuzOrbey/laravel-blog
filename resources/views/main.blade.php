@@ -6,6 +6,6 @@
       @include('inc._messages')
       @yield('content')
       <hr>
-      <p class="text-center">Yavuz Orbey - Copyright 2018</p>
+      <p class="text-center">Yavuz Orbey - Copyright {{ date('Y')}}</p>
     </div>
 @include('inc._foot')
