@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+
 use App\Post;
 use Session;
 class PostController extends Controller
@@ -18,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(10);
         return view('posts.index', compact('posts'));
     }
 
@@ -42,9 +44,10 @@ class PostController extends Controller
     {
         // validate the data
         $validatedData = $request->validate([
-            'title' => 'required|unique:posts|max:190',
+            'title' => 'bail|required|max:190',
             'body' => 'required',
-            'slug' => 'required|alpha_dash|min:5|max:190|unique:posts,slug'
+            'slug' => ['bail', 'required', 'alpha_dash', 'min:5','max:190', Rule::unique('posts')->where(function ($query) {
+                return $query->where('user_id', Auth::id());})]
         ]);
 
         //store in database

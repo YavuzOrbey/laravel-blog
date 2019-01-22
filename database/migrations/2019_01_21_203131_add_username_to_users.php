@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSlugToPosts extends Migration
+class AddUsernameToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddSlugToPosts extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->string('slug')->after('body');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('username')->unique()->after('id');
         });
     }
 
@@ -25,9 +25,8 @@ class AddSlugToPosts extends Migration
      */
     public function down()
     {
-        //testing
-        Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('slug');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('username');
         });
     }
 }

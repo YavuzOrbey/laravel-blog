@@ -7,6 +7,15 @@
         
         <div class="col-md-8"><h1>Create New Post</h1></div>
         <div class="col-md-12">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             {!! Form::open(['route' => 'posts.store', 'data-parsley-validate'=>'']) !!}
                 {{Form::label('title', 'Title:') }}
                 {{Form::text('title', null, ['class'=>'form-control', 'placeholder'=>'Enter a Title', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
