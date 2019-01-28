@@ -30,16 +30,16 @@ class BlogController extends Controller
         if($user = User::where('username', $username)->first()){
             if($post = Post::where('user_id', $user->id)->where('slug', $slug)->first()){
                 //get all comments for this specific post
-                $comments = Comment::where('post_id', $post->id)->get();
+                if($comments = Comment::where('post_id', $post->id)->get()){
+                    $users = DB::table('users')->join('comments', 'users.id', '=', 'comments.user_id')->where('comments.post_id', '=', $post->id)->select('users.username')->get();
+                    return view('blog.single', compact('post', 'comments', 'users'));
+                }
 
-                $users = DB::table('users')->join('comments', 'users.id', '=', 'comments.user_id')->where('comments.post_id', '=', $post->id)->select('users.username')->get();
-                Log::info($users);
-                Log::info($comments);
+                
                 //get the user who left the comment 
                 //$users = User::unionAll('id', $comments->pluck('user_id'));
                 //$users = $comments->join('users', 'users.id', '=', 'comments.user_id');
                // Log::info($users->get()->toArray());
-                return view('blog.single', compact('post', 'comments', 'users'));
             }
         }
         abort(404);
