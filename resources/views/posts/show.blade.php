@@ -10,31 +10,29 @@
     </div>
     <div class="col-md-4">
         <div class="card">
-        <div class="card-body bg-light">
-            <dl class="dl-horizontal">
-                <dt>URL Slug:</dt>
-            <dd><a href="{{route('blog.single', $post->slug)}}">{{url('blog', $post->slug)}}</a></dd>
-            </dl>
-           <dl class="dl-horizontal">
-            <dt>Created At</dt>
-           <dd>{{date('M j, Y g:i A', strtotime($post->created_at))}}</dd>
-           </dl>
-           <dl class="dl-horizontal">
-            <dt>Last Updated At</dt>
-            <dd>{{ date('M j, Y g:i A', strtotime($post->updated_at)) }}</dd>
-           </dl>
-           <hr>
-           {!! Form::open(['route'=> ['posts.destroy', $post->id], 'method'=>'DELETE'])!!}
-           <div class="row">
-               <div class="col-sm-6">{!! Html::linkRoute('posts.edit', 'Edit', array($post->id), array('class'=>'btn btn-primary btn-block')) !!}</div>
-               <div class="col-sm-6">{{Form::submit('Delete', array('class'=>'btn btn-danger btn-block')) }}</div>
-               
-               
+            <div class="card-body bg-light">
+                <dl class="dl-horizontal">
+                    <dt>URL Slug:</dt>
+                    <dd><a href="{{route('blog.single', $post->slug)}}">{{url('blog', $post->slug)}}</a></dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>Created At</dt>
+                    <dd>{{date('M j, Y g:i A', strtotime($post->created_at))}}</dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>Last Updated At</dt>
+                    <dd>{{ date('M j, Y g:i A', strtotime($post->updated_at)) }}</dd>
+                </dl>
+                <hr>
+                {!! Form::open(['route'=> ['posts.destroy', $post->id], 'method'=>'DELETE'])!!}
+                <div class="row">
+                    <div class="col-sm-6">{!! Html::linkRoute('posts.edit', 'Edit', array($post->id), array('class'=>'btn btn-primary btn-block')) !!}</div>
+                    <div class="col-sm-6">{{Form::submit('Delete', array('class'=>'btn btn-danger btn-block')) }}</div>
+                </div>
+                {!! Form::close() !!}
+                {!! Html::linkRoute('posts.index', '<< See all posts', null, array('class'=>'btn btn-outline-dark btn-h1-spacing')) !!}
             </div>
-            {!! Form::close() !!}
-            {!! Html::linkRoute('posts.index', '<< See all posts', null, array('class'=>'btn btn-outline-dark btn-h1-spacing')) !!}
         </div>
-    </div>
     </div>
 </div>
 

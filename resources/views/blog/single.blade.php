@@ -26,6 +26,33 @@
     </div>
     </div>
 </div>
+<div class="row mt-2">
+    <ol>
+    @foreach($comments as $key=>$comment)
+<li>{{ $comment->comment_text . ' by ' . $users[$key]->username}}</li>
+    @endforeach
+    </ol>
+</div>
+<div class="row mt-2">
+        <div class="col-md-8">
+                @auth
+                {!! Form::open(['route' => 'comments.store', 'data-parsley-validate'=>'']) !!}
+    
+                {{Form::label('comment', 'Comment:') }}
+                {{Form::textarea('comment', null, array('class'=>'form-control', 'placeholder'=>'Add a comment...','required'=>'')) }}
+
+                {{ Form::hidden('post_id', $post->id) }}
+                {{ Form::hidden('user_id', $post->user_id) }}
+                {{Form::submit('Create', ['class'=>'btn btn-primary btn-lg btn-block', 'style'=> 'margin-top: 20px']) }}
+    
+                {!! Form::close() !!}
+                @else
+                <span>Only logged in users can comment on posts. Login to comment on this post!</span>
+                @endauth
+        </div>
+</div>
+
+
 
 @endsection
 @section('title', "| $post->title")

@@ -127,4 +127,9 @@ class PostController extends Controller
         Session::flash('success', 'Post successfully deleted');
         return redirect()->route('posts.index');
     }
+
+    public function comments()
+    {
+        return $this->hasMany('comments');
+    }
 }
