@@ -9,10 +9,10 @@
   </div>
 </div>
 
-    @foreach ($posts as $post)
+    @foreach ($posts as $key=>$post)
     <div class="row">
         <div class="col-md-3">
-          <h5>{{$post->id}}. {{$post->title}}</h5>
+          <h5>{{$key+1}}. {{$post->title}}</h5>
           {{date('M j, Y g:i A', strtotime($post->created_at))}}
         </div>
         <div class='col-md-9'>

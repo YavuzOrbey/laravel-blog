@@ -35,7 +35,9 @@
 </div>
 <div class="row mt-2">
         <div class="col-md-8">
-                @auth
+            <!-- may want to change this at some point to have post owner comment on his own posts -->
+                @if (Auth::check() && Auth::id()!=$post->user_id )
+
                 {!! Form::open(['route' => 'comments.store', 'data-parsley-validate'=>'']) !!}
     
                 {{Form::label('comment', 'Comment:') }}
@@ -46,9 +48,10 @@
                 {{Form::submit('Create', ['class'=>'btn btn-primary btn-lg btn-block', 'style'=> 'margin-top: 20px']) }}
     
                 {!! Form::close() !!}
-                @else
+                @elseif (!Auth::check())
                 <span>Only logged in users can comment on posts. Login to comment on this post!</span>
-                @endauth
+                
+                @endif
         </div>
 </div>
 

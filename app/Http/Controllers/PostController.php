@@ -11,6 +11,7 @@ use Session;
 class PostController extends Controller
 {
     public function __construct(){
+        // all this does is make sure you're logged in. It doesn't make sure that you own what you're trying to reach
         $this->middleware('auth');
     }
     /**
@@ -73,7 +74,11 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+        // This is a makeshift solution to a complicated problem. Find a better way!!
+        if(Auth::id()==$post->user_id)
         return view('posts.show', compact('post'));
+        else
+        abort(404);
     }
 
     /**
@@ -85,7 +90,11 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+        if(Auth::id()==$post->user_id)
         return view('posts.edit', compact('post'));
+        else
+        abort(404);
+        
     }
 
     /**

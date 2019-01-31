@@ -13,7 +13,8 @@
             <div class="card-body bg-light">
                 <dl class="dl-horizontal">
                     <dt>URL Slug:</dt>
-                    <dd><a href="{{route('blog.single', $post->slug)}}">{{url('blog', $post->slug)}}</a></dd>
+                    <!-- DONT FORGET need to put username if its going to route blog.single -->
+                    <dd><a href="{{route('blog.single', ['username' => Auth::user()->username, 'slug'=>$post->slug])}}">View in blog </a></dd>
                 </dl>
                 <dl class="dl-horizontal">
                     <dt>Created At</dt>
