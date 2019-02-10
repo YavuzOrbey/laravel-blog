@@ -20,8 +20,10 @@ Route::get('{username}/blog/{slug}', 'BlogController@getSingle')->name('blog.sin
 Route::get('{username}/blog/', 'BlogController@getIndex')->name('blog.index');
 Route::resources([
     'comments'=>'CommentController',
-    'posts' => 'PostController'
+    'posts' => 'PostController',
     ]);
+Route::resource('categories', 'CategoryController')->except(['create']);
+Route::resource('tags', 'TagController')->except(['create']);
 Auth::routes(); //using artisan command php artisan make:auth sets up routing, controllers, views etc.
 
 /* for some reason a get request isnt created for logout but just in case a user decides to type the website name/logout we can:

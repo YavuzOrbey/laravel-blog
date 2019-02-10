@@ -5,8 +5,12 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Log;
 use App\Post;
+use App\User;
+use App\Tag;
+use App\Category;
+
 use Session;
 class PostController extends Controller
 {
@@ -32,7 +36,16 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        //Log::info($categories);
+        /* $categories = $categories->mapWithKeys(function ($category) {
+            return [$category['id']=>$category['name']];
+        }); */
+        $categories = $categories->pluck('name', 'id'); // a better way of doing the same thing as above
+        $tags = $tags->pluck('name', 'id');
+        //Log::info($categories);
+        return view('posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -43,9 +56,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
+        
         // validate the data
+        
         $validatedData = $request->validate([
             'title' => 'bail|required|max:190',
+            'category'=> 'bail|required|integer',
             'body' => 'required',
             'slug' => ['bail', 'required', 'alpha_dash', 'min:5','max:190', Rule::unique('posts')->where(function ($query) {
                 return $query->where('user_id', Auth::id());})]
@@ -55,10 +72,14 @@ class PostController extends Controller
             $post = new Post;
             $post->user_id = Auth::id();
             $post->title = $request->input('title');
+            $post->category_id = $request->input('category');
             $post->slug = $request->input('slug');
             $post->body = $request->input('body');
 
             $post->save();
+
+            //attaching tag associations happens after the save (remember the many to many relatioship)
+            $post->tags()->sync($request->tags);
         //redirect to another page
         //$request->session()->flash('success', 'Post successfully saved');
         Session::flash('success', 'Blog successfully saved');
@@ -75,8 +96,10 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         // This is a makeshift solution to a complicated problem. Find a better way!!
-        if(Auth::id()==$post->user_id)
+        if(Auth::id()==$post->user_id){
         return view('posts.show', compact('post'));
+
+        }
         else
         abort(404);
     }
@@ -90,8 +113,14 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        if(Auth::id()==$post->user_id)
-        return view('posts.edit', compact('post'));
+
+        if(Auth::id()==$post->user_id){
+            $categories = Category::all();
+            $categories = $categories->pluck('name', 'id');
+            $tags = Tag::all();
+            $tags = $tags->pluck('name', 'id');
+            return view('posts.edit', compact('post', 'categories', 'tags'));
+        }
         else
         abort(404);
         
@@ -109,16 +138,18 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|max:190',
             'body' => 'required',
+            'category'=> 'bail|required|integer',
             'slug' => 'required|alpha_dash|min:5|max:190|unique:posts,slug,' . $id
         ]);
 
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->category_id = $request->input('category');
         $post->slug = $request->input('slug');
 
         $post->save();
-
+        $post->tags()->sync($request->tags);
         Session::flash('success', 'Post successfully updated');
         return redirect()->route('posts.show', $post->id);
     }
@@ -132,11 +163,15 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        // below is kind of redundant with ondelete cascade but good practice
+        $post->tags()->detach();
         $post->delete();
         Session::flash('success', 'Post successfully deleted');
         return redirect()->route('posts.index');
     }
-
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
     public function comments()
     {
         return $this->hasMany('comments');

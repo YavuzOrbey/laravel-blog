@@ -30,10 +30,14 @@ class BlogController extends Controller
         if($user = User::where('username', $username)->first()){
             if($post = Post::where('user_id', $user->id)->where('slug', $slug)->first()){
                 //get all comments for this specific post
-                if($comments = Comment::where('post_id', $post->id)->get()){
-                    $users = DB::table('users')->join('comments', 'users.id', '=', 'comments.user_id')->where('comments.post_id', '=', $post->id)->select('users.username')->get();
-                    return view('blog.single', compact('post', 'comments', 'users'));
-                }
+                //if($comments = Post::find($post->id)->comments){ // uses the hasmany relationship to find the comments EDIT: found out I don't even have to send 
+                    // the comments through the controller. Because there's a hasmany relationship the post can use it's comments method to find them.
+                    // Comment::where('post_id', $post->id)->get() Older way I did it 
+
+                    // didn't need to send the users at all just needed to use the hasmany relationship the users had with comments
+                    //$users = DB::table('users')->join('comments', 'users.id', '=', 'comments.user_id')->where('comments.post_id', '=', $post->id)->select('users.username')->get();
+                    return view('blog.single', compact('post'));
+                //}
 
                 
                 //get the user who left the comment 

@@ -97,6 +97,8 @@
         
         <div class="dropdown-menu w-auto" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{route('posts.index')}}">Posts</a>
+          <a class="dropdown-item" href="{{route('categories.index')}}">Categories</a>
+          <a class="dropdown-item" href="{{route('tags.index')}}">Tags</a>
           <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             {{ __('Logout') }}
           </a>

@@ -15,6 +15,10 @@
                     <dt>URL Slug:</dt>
                     <!-- DONT FORGET need to put username if its going to route blog.single -->
                     <dd><a href="{{route('blog.single', ['username' => Auth::user()->username, 'slug'=>$post->slug])}}">View in blog </a></dd>
+                    <dt>Category</dt>
+                    <dd>{{$post->category->name}}</dd>
+                    <dt>Tags</dt>
+                <dd>{{$post->tags->implode('name', ', ')}}</dd>
                 </dl>
                 <dl class="dl-horizontal">
                     <dt>Created At</dt>

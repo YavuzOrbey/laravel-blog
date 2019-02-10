@@ -28,8 +28,8 @@
 </div>
 <div class="row mt-2">
     <ol>
-    @foreach($comments as $key=>$comment)
-<li>{{ $comment->comment_text . ' by ' . $users[$key]->username}}</li>
+    @foreach($post->comments as $comment) 
+    <li>{{ $comment->comment_text . ' - ' . $comment->user->username . ' at ' . date('m/d/Y, g:i A', strtotime($comment->created_at))/*$users[$key]->username didn't even need to send the users */  . ($comment->created_at == $comment->updated_at ? ' ': 'Edit: ' . date('m/d/Y, g:i A', strtotime($comment->created_at))) }}</li>
     @endforeach
     </ol>
 </div>
