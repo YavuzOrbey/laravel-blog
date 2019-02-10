@@ -1,2 +1,2 @@
-
-{{$message_text}}
+From: {{$email}}
+<p>{{$message_text}}</p>
