@@ -62,17 +62,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $validatedData = $request->validate([
-            'name'=> 'bail|required|max:190|unique:categories'
-        ]);
-
         $category = Category::find($id);
-
-        $category->name = $request->input('name');
-        $category->save();
-
-        Session::flash('success', 'Category successfully updated');
-        return redirect()->route('categories.index');
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -84,7 +75,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name'=> 'bail|required|max:190|unique:categories'
+        ]);
+
+        $category = Category::find($id);
+
+        $category->name = $request->input('name');
+        $category->save();
+
+        Session::flash('success', 'Category successfully updated');
+        return redirect()->route('categories.index');
     }
 
     /**

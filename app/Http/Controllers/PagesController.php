@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
+use App\Mail\ContactMe;
+use Session;
 class PagesController extends Controller{
-    
+
 
     //controller actions
 
@@ -35,5 +39,20 @@ class PagesController extends Controller{
 
     public function getContact(){
         return view('pages.contact');
+    }
+
+    public function sendEmail(Request $request){
+        $validatedData = $request->validate([
+            'email'=> 'bail|required|email',
+            'message' => 'required|min:10'
+        ]);
+        $data = [
+            'email' => $request->input('email'),
+            'subject' => $request->input('subject'),
+            'message' => $request->input('message')
+        ];
+        Mail::to("yavuz.orbey@gmail.com")->send(new ContactMe($data));
+        Session::flash('success', 'Email sent!');
+        return redirect()->route('send.email');
     }
 }

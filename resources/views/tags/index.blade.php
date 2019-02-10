@@ -21,12 +21,15 @@
       <tbody>
       @foreach ($tags as $key=>$tag)
       <tr>
-        <td><span class='ref-name'><a href="{{route('tags.show', $tag)}}">{{$tag->name}}</a></span></td>
-      <td><a href="{{route('tags.edit', $tag)}}"><button class="btn btn-success "><i class="fas fa-edit"></i></button></a></td>
-      {!! Form::open(['route'=> ['tags.update', $tag], 'method'=>'PUT'])!!}
-      {{Form::text('name', $tag->name, [ 'placeholder'=>'Enter a Tag Name', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
-      {{Form::submit('Save', ['class'=>'btn btn-primary btn-lg ', 'style'=> 'margin-top: 20px']) }}
-      {!! Form::close() !!}
+        
+        <td><span class='ref-name'><a href="{{route('tags.show', $tag)}}">{{$tag->name}}</a></span>
+          {!! Form::open(['route'=> ['tags.update', $tag], 'method'=>'PUT', 'class'=>'edit-form'])!!}
+          {{Form::text('name', $tag->name, [ 'placeholder'=>'Enter a Tag Name', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
+          {{Form::submit('Save', ['class'=>'btn btn-primary btn-xs ']) }}
+          {!! Form::close() !!}</td>
+        
+      <td><a href="{{route('tags.edit', $tag)}}"><button class="btn btn-success edit"><i class="fas fa-edit"></i></button></a></td>
+      
         {!! Form::open(['route'=> ['tags.destroy', $tag], 'method'=>'DELETE'])!!}
         <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></td>
         {!! Form::close() !!}
@@ -49,3 +52,21 @@
 @stop
 
 @section('title', '| Tags')
+
+@section('scripts')
+<script>
+  $( ".edit-form" ).hide();
+var editButtons = document.querySelectorAll('.edit');
+
+editButtons.forEach(elem=> elem.addEventListener("click", showEditField));
+
+function showEditField(event){
+  event.preventDefault();
+  let row = $(this).closest('tr').children('td');
+  let tagName = row.children('.ref-name');
+  let editForm = row.children('.edit-form');
+  $(tagName).hide();
+  $(editForm).show();
+}
+</script>
+@stop

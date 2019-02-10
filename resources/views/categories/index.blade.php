@@ -23,10 +23,13 @@
         <tbody>
       @foreach ($categories as $key=>$category)
             <tr>
-              <td><span class='ref-name'><a href="{{route('categories.show', $category)}}">{{$category->name}}</a></span></td>
-              {!! Form::open(['route'=> ['categories.update', $category->id], 'method'=>'PUT'])!!}
-              <td><button class="btn btn-success "><i class="fas fa-edit"></i></button></td>
-              {!! Form::close() !!}
+              <td><span class='ref-name'><a href="{{route('categories.show', $category)}}">{{$category->name}}</a></span>
+              {!! Form::open(['route'=> ['categories.update', $category->id], 'method'=>'PUT','class'=>'edit-form'])!!}
+              {{Form::text('name', $category->name, [ 'placeholder'=>'Enter a Category Name', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
+              {{Form::submit('Save', ['class'=>'btn btn-primary btn-xs ']) }}
+              {!! Form::close() !!}</td>
+              <td><a href="{{route('categories.edit', $category->id)}}"><button class="btn btn-success edit"><i class="fas fa-edit"></i></button></a></td>
+
               {!! Form::open(['route'=> ['categories.destroy', $category->id], 'method'=>'DELETE'])!!}
               <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></td>
               {!! Form::close() !!}
@@ -50,3 +53,21 @@
 @stop
 
 @section('title', '| Categories')
+
+@section('scripts')
+<script>
+$( ".edit-form" ).hide();
+var editButtons = document.querySelectorAll('.edit');
+
+editButtons.forEach(elem=> elem.addEventListener("click", showEditField));
+
+function showEditField(event){
+  event.preventDefault();
+  let row = $(this).closest('tr').children('td');
+  let tagName = row.children('.ref-name');
+  let editForm = row.children('.edit-form');
+  $(tagName).hide();
+  $(editForm).show();
+}
+</script>
+@stop

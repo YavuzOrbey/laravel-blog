@@ -15,7 +15,7 @@ Route::get('/', 'PagesController@getIndex');
 
 Route::get('about', 'PagesController@getAbout');
 Route::get('contact', 'PagesController@getContact');
-Route::post('contact', 'ContactController@store')->name('contact.store'); //route name for controller action
+Route::post('contact', 'PagesController@sendEmail')->name('send.email'); //route name for controller action
 Route::get('{username}/blog/{slug}', 'BlogController@getSingle')->name('blog.single')->where('slug', '[\w\d\-\_]+');
 Route::get('{username}/blog/', 'BlogController@getIndex')->name('blog.index');
 Route::resources([
