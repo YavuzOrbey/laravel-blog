@@ -20,6 +20,10 @@
                 <input id="contact-email" name="email" class="form-control" type="email">
             </div>
             <div class="form-group">
+                    <label for="fullname" >Name</label>
+                    <input id="fullname" name="fullname" class="form-control" type="text">
+            </div>
+            <div class="form-group">
                 <label for="subject">Subject</label>
                 <input id="subject" name="subject" class="form-control" type="text">
             </div>

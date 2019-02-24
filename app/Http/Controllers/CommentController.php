@@ -6,6 +6,7 @@ use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Session;
 class CommentController extends Controller
 {
     /**
@@ -41,13 +42,20 @@ class CommentController extends Controller
             'comment'=> 'bail|required|max:190'
         ]);
 
+        /*
+        So laravel can associate belongsto relationships. The comment belongs to a post so we can first find the post given the id then associate this comment with the post
+        $post = Post::find($request->input('post_id'));
+        $comment->associate($post);
+        */
+
         $comment = new Comment;
         $comment->user_id = Auth::id();
-        $comment->post_id = $request->input('post_id');
+        $comment->post_id = $request->input('post_id'); //see note!
         $comment->comment_text = $request->input('comment');
         $comment->save();
         //need this to redirect back to the original author's post single page
         //$postAuthor = User::where('id',  $request->input('user_id'))->first();
+        Session::flash('success', 'Comment added');
         return redirect()->back();
     }
 

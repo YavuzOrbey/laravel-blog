@@ -44,10 +44,12 @@ class PagesController extends Controller{
     public function sendEmail(Request $request){
         $validatedData = $request->validate([
             'email'=> 'bail|required|email',
+            'fullname' => 'required',
             'message' => 'required|min:10'
         ]);
         $data = [
             'email' => $request->input('email'),
+            'name' => $request->input('fullname'),
             'subject' => $request->input('subject'),
             'message' => $request->input('message')
         ];

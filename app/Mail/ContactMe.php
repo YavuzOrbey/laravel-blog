@@ -13,7 +13,7 @@ class ContactMe extends Mailable
 
 
     //public properties 
-    public $email, $subject, $message_text;
+    public $email, $name, $subject, $message_text;
     /**
      * Create a new message instance.
      *
@@ -22,6 +22,7 @@ class ContactMe extends Mailable
     public function __construct($data)
     {
         $this->email = $data['email'];
+        $this->name = $data['name'];
         $this->subject = $data['subject'];
         $this->message_text = $data['message'];
     }

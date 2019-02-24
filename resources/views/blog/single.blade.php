@@ -27,11 +27,25 @@
     </div>
 </div>
 <div class="row mt-2">
-    <ol>
-    @foreach($post->comments as $comment) 
-    <li>{{ $comment->comment_text . ' - ' . $comment->user->username . ' at ' . date('m/d/Y, g:i A', strtotime($comment->created_at))/*$users[$key]->username didn't even need to send the users */  . ($comment->created_at == $comment->updated_at ? ' ': 'Edit: ' . date('m/d/Y, g:i A', strtotime($comment->created_at))) }}</li>
-    @endforeach
-    </ol>
+    <div class="col-md-8">
+        <ol class="">
+        @foreach($post->comments as $comment) 
+        <li class="comment">
+            <div class="row">
+                <div class="col-md-10 offset-md-1 comment-text">{{ $comment->comment_text }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-md-1">
+                    <div class="date-time-display">
+                        {{'Posted at: ' . date('m/d/Y, g:i A', strtotime($comment->created_at)) . ($comment->created_at == $comment->updated_at ? ' ': 'Edit: ' . date('m/d/Y, g:i A', strtotime($comment->created_at)))}}
+                    </div>
+                    <strong>{{$comment->user->username /*$users[$key]->username didn't even need to send the users */}}</strong>
+                </div>
+            </div>
+        </li>
+        @endforeach
+        </ol>
+    </div>
 </div>
 <div class="row mt-2">
         <div class="col-md-8">
@@ -58,7 +72,7 @@
 
 
 @endsection
-@section('title', "| $post->title")
+@section('title', '| ' . htmlspecialchars($post->title))
 
 @section('scripts')
 {{Html::script('js/parsley.min.js') }}

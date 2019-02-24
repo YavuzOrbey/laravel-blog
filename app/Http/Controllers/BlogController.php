@@ -48,4 +48,13 @@ class BlogController extends Controller
         }
         abort(404);
     }
+
+    public function getRandom(){
+        $users = User::pluck('id')->toArray();
+        $user = User::where('id', array_rand($users))->first();
+        return redirect()->route('blog.index', [$user->username]);
+        //both work but i like the above better
+        //return $this->getIndex($user->username);
+        
+    }
 }

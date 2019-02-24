@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    //tags can have many posts 
+    //tags can belong to  many posts 
     public function posts()
     {
         return $this->belongsToMany('App\Post');
