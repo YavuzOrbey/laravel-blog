@@ -9,26 +9,15 @@ use App\User;
 use Session;
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+
+    public function __construct(){
+        $this->middleware('auth');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function index(){
+        $comments = Comment::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(10);
+        return view('comments.index', compact('comments'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -58,18 +47,6 @@ class CommentController extends Controller
         Session::flash('success', 'Comment added');
         return redirect()->back();
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -78,7 +55,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        return view('comments.edit', compact('comment'));
     }
 
     /**
@@ -90,7 +67,14 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $validatedData = $request->validate([
+            'comment'=> 'required'
+        ]);
+        $comment->comment_text = $request->input('comment');
+        $comment->save();
+
+        Session::flash('success', 'Comment updated!');
+        return redirect()->back();
     }
 
     /**
@@ -101,6 +85,9 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+    $this->middleware('owner:' . $comment->user);
+    $comment->delete();
+    Session::flash('success', 'Comment successfully deleted');
+    return redirect()->back();
     }
 }

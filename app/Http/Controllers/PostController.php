@@ -95,13 +95,13 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        // This is a makeshift solution to a complicated problem. Find a better way!!
+        // This is a makeshift solution to a complicated problem. Find a better way!! Let's make a middleware owner that comes after auth that verifies that only the owner of the post can do anything to it
         if(Auth::id()==$post->user_id){
         return view('posts.show', compact('post'));
 
         }
         else
-        abort(404);
+        return "Sorry davey you dont have permission to view that";
     }
 
     /**

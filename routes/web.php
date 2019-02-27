@@ -20,9 +20,9 @@ Route::get('{username}/blog/{slug}', 'BlogController@getSingle')->name('blog.sin
 Route::get('{username}/blog/', 'BlogController@getIndex')->name('blog.index');
 Route::get('/blog/random', 'BlogController@getRandom')->name('blog.random');
 Route::resources([
-    'comments'=>'CommentController',
-    'posts' => 'PostController',
+    'posts' => 'PostController'
     ]);
+Route::resource('comments', 'CommentController')->except(['create', 'show']);
 Route::resource('categories', 'CategoryController')->except(['create']);
 Route::resource('tags', 'TagController')->except(['create']);
 Auth::routes(); //using artisan command php artisan make:auth sets up routing, controllers, views etc.

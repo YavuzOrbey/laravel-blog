@@ -26,29 +26,9 @@
     </div>
     </div>
 </div>
+@include('inc/_load_comments')
 <div class="row mt-2">
-    <div class="col-md-8">
-        <ol class="">
-        @foreach($post->comments as $comment) 
-        <li class="comment">
-            <div class="row">
-                <div class="col-md-10 offset-md-1 comment-text">{{ $comment->comment_text }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 offset-md-1">
-                    <div class="date-time-display">
-                        {{'Posted at: ' . date('m/d/Y, g:i A', strtotime($comment->created_at)) . ($comment->created_at == $comment->updated_at ? ' ': 'Edit: ' . date('m/d/Y, g:i A', strtotime($comment->created_at)))}}
-                    </div>
-                    <strong>{{$comment->user->username /*$users[$key]->username didn't even need to send the users */}}</strong>
-                </div>
-            </div>
-        </li>
-        @endforeach
-        </ol>
-    </div>
-</div>
-<div class="row mt-2">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <!-- may want to change this at some point to have post owner comment on his own posts -->
                 @if (Auth::check() && Auth::id()!=$post->user_id )
 

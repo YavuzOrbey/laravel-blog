@@ -1,6 +1,7 @@
 @extends('main')
 @section('stylesheets')
 {{Html::style('css/parsley.css') }}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 @endsection
 @section('content')
 <div class="row mt-2">
@@ -40,7 +41,36 @@
         </div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-md-10">
+      <h1>All Comments</h1>
+    </div>
+  </div>
+  <div class="row mt-2">
+      <div class="col-md-12">
+        <table>
+          <thead>
+            <tr>
+              <th>Comment</th>
+              <th>User</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+        @foreach ($post->comments as $comment)
+              <tr>
+                <td><span class='ref-name'>{{$comment->comment_text}}</span></td>
+                <td><a href="/{{$comment->user->username}}/blog">{{$comment->user->username}}</a></td>
+                {!! Form::open(['route'=> ['comments.destroy', $comment], 'method'=>'DELETE'])!!}
+                <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></td>
+                {!! Form::close() !!}
+              </tr>
+        @endforeach
+  
+          </tbody>
+        </table>
+      </div>
+  </div>   
 @endsection
 @section('title', '| Created Post')
 

@@ -13,8 +13,9 @@ class Owner
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $object)
     {
+        dd($object);
         return $next($request);
     }
 }
