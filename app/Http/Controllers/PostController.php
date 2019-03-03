@@ -10,8 +10,10 @@ use App\Post;
 use App\User;
 use App\Tag;
 use App\Category;
-
+use Purifier;
 use Session;
+use Image;
+use Storage;
 class PostController extends Controller
 {
     public function __construct(){
@@ -65,7 +67,8 @@ class PostController extends Controller
             'category'=> 'bail|required|integer',
             'body' => 'required',
             'slug' => ['bail', 'required', 'alpha_dash', 'min:5','max:190', Rule::unique('posts')->where(function ($query) {
-                return $query->where('user_id', Auth::id());})]
+                return $query->where('user_id', Auth::id());})],
+            'image'=> 'sometimes|required|image'
         ]);
 
         //store in database
@@ -74,8 +77,18 @@ class PostController extends Controller
             $post->title = $request->input('title');
             $post->category_id = $request->input('category');
             $post->slug = $request->input('slug');
-            $post->body = $request->input('body');
+            $post->body = Purifier::clean($request->input('body'));
 
+            //save image
+            if($request->hasFile('image')){
+                $image = $request->image;
+                $filename = time() . "." . $image->getClientOriginalExtension();
+                $location = public_path('images/' . $filename);
+                Image::make($image)->resize(800, 400)->save($location)->destroy();
+
+                $post->image = $filename;
+            }
+        
             $post->save();
 
             //attaching tag associations happens after the save (remember the many to many relatioship)
@@ -139,15 +152,31 @@ class PostController extends Controller
             'title' => 'required|max:190',
             'body' => 'required',
             'category'=> 'bail|required|integer',
-            'slug' => 'required|alpha_dash|min:5|max:190|unique:posts,slug,' . $id
+            'slug' => 'required|alpha_dash|min:5|max:190|unique:posts,slug,' . $id,
+            'image'=> 'sometimes|required|image'
         ]);
 
         $post = Post::find($id);
         $post->title = $request->input('title');
-        $post->body = $request->input('body');
+        $post->body = Purifier::clean($request->input('body'));
         $post->category_id = $request->input('category');
         $post->slug = $request->input('slug');
 
+        if($request->hasFile('image')){
+            //add new photo
+            $image = $request->image;
+            $filename = time() . "." . $image->getClientOriginalExtension();
+            $location = public_path('images/' . $filename);
+            Image::make($image)->resize(800, 400)->save($location)->destroy();
+
+            $oldFileName = $post->image;
+            // update database
+
+            $post->image = $filename;
+
+            //delete old photo 
+            Storage::delete($oldFileName);
+        }
         $post->save();
         $post->tags()->sync($request->tags);
         Session::flash('success', 'Post successfully updated');
@@ -165,6 +194,7 @@ class PostController extends Controller
         $post = Post::find($id);
         // below is kind of redundant with ondelete cascade but good practice
         $post->tags()->detach();
+        Storage::delete($post->image);
         $post->delete();
         Session::flash('success', 'Post successfully deleted');
         return redirect()->route('posts.index');

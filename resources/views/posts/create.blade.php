@@ -1,8 +1,11 @@
 @extends('main')
 @section('stylesheets')
 {{Html::style('css/parsley.css') }}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
 <!-- Select2 CDN -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{{Html::script('js/wysiwyg.js') }}
 @endsection
 @section('content')
     <div class="row justify-content-center">
@@ -20,7 +23,7 @@
 
                 
             @endif
-            {!! Form::open(['route' => 'posts.store', 'data-parsley-validate'=>'']) !!}
+            {!! Form::open(['route' => 'posts.store', 'data-parsley-validate'=>'', 'onSubmit'=> 'return sendForm()', 'files'=> true]) !!}
                 {{Form::label('title', 'Title:') }}
                 {{Form::text('title', null, ['class'=>'form-control', 'placeholder'=>'Enter a Title', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
 
@@ -33,12 +36,19 @@
                 {{Form::label('slug', 'Url:') }}
                 {{Form::text('slug', null, ['class'=>'form-control', 'placeholder'=>'Enter a Slug URL', 'required'=>'', 'minlength'=>5, 'maxlength'=>190] ) }}
 
-                {{Form::label('body', 'Post Body:') }}
-                {{Form::textarea('body', null, array('class'=>'form-control', 'placeholder'=>'What\'s on your mind?','required'=>'')) }}
+                {{Form::label('image', 'Image:') }}
+                {{Form::file('image') }}
 
-                {{Form::submit('Create', ['class'=>'btn btn-primary btn-lg btn-block', 'style'=> 'margin-top: 20px']) }}
+                {{Form::label('body', 'Post Body:') }}
+                {{Form::hidden('body', null, array('id'=>'hidden-editor', 'required'=>'')) }}
+                <section id="editor" class="textarea form-control" contenteditable></section>
+
+                {{Form::submit('Create', ['id'=>'submit-btn', 'class'=>'btn btn-primary btn-lg btn-block', 'style'=> 'margin-top: 20px']) }}
 
             {!! Form::close() !!}
+        </div>
+        <div class="col-md-12">
+            <div class="buttons"></div>
         </div>
         
     </div>
@@ -52,5 +62,8 @@
 <script>$(document).ready(function() {
     $('.js-example-basic-multiple').select2();
 });
+
+init();
+
 </script>
 @endsection

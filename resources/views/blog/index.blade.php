@@ -14,7 +14,7 @@
       @foreach ($posts as $post)
       <div class="blog-post">
             <h3>{{$post->title}}</h3>
-            <p>{{ substr($post->body, 0, 200)}}{{ strlen($post->body) > 200 ? "...": ""}}</p>
+            <p>{{ substr(strip_tags($post->body), 0, 200)}}{{ strlen(strip_tags($post->body)) > 200 ? "...": ""}}</p>
             {!! Html::linkRoute('blog.single', 'Read more ', array($username, $post->slug), array('class'=>'btn btn-outline-secondary btn-sm')) 
             // Also can use url() or route(). Read more on these
             !!}

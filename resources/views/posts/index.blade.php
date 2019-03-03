@@ -16,7 +16,7 @@
           {{date('M j, Y g:i A', strtotime($post->created_at))}}
         </div>
         <div class='col-md-9'>
-          <p>{{ substr($post->body, 0, 200)}}{{ strlen($post->body) > 200 ? "...": ""}} {!! Html::linkRoute('posts.show', 'View', array($post->id), array('class'=>'btn btn-outline-secondary btn-sm')) !!}
+          <p>{{substr(strip_tags($post->body), 0, 200) }}{{ strlen(strip_tags($post->body)) > 200 ? "...": ""}} {!! Html::linkRoute('posts.show', 'View', array($post->id), array('class'=>'btn btn-outline-secondary btn-sm')) !!}
           <a href="{{ route('posts.edit', $post->id)}}" class="btn btn-outline-secondary btn-sm">Edit</a></p>
 
         </div>

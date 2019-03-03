@@ -46,7 +46,8 @@ ol {
 li.comment {
     counter-increment: my-awesome-counter;
     margin-top: 1px;
-    padding: 20px 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 li.comment::before {
     margin-right: 10px;
@@ -84,4 +85,7 @@ li.comment::before {
 .date-time-display {
     color: rgba(25, 25, 25, 0.8);
     text-align: right;
+}
+.textarea {
+    height: auto;
 }

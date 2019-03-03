@@ -7,8 +7,12 @@
     <div class="col-md-6">
         <div class="blog-post">
             <h3>{{$post->title}}</h3>
-            <p>{{$post->body}}</p>
+            <p >{!! $post->body!!}</p>
+        @if ($post->image)
+        <img src="{{asset('images/' . $post->image)}}">
+        @endif
         </div>
+
     </div>
     <div class="col-md-4 offset-md-2">
         <div class="card">

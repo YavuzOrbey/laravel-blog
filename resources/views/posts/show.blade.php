@@ -7,7 +7,7 @@
 <div class="row mt-2">
     <div class="col-md-8">
         <h3>{{$post->title}}</h3>
-        <p>{{$post->body}}</p>
+        <p>{!!$post->body!!}</p>
     </div>
     <div class="col-md-4">
         <div class="card">
