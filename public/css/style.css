@@ -3,6 +3,16 @@ nav {
 }
 body {
     font-family: Helvetica, Arial, sans-serif;
+    background: #f6f6f6;
+    background-image: url("../images/istanbul-big.jpg");
+    background-size: cover;
+    height: 100vh;
+    background-attachment: fixed;
+}
+.white {
+    background: rgba(255, 255, 255, 0.8);
+}
+.istanbul {
 }
 .btn-h1-spacing {
     margin-top: 10px;
@@ -88,4 +98,8 @@ li.comment::before {
 }
 .textarea {
     height: auto;
+}
+.bg {
+    background-image: url("../images/bg.jpg");
+    background-size: cover;
 }

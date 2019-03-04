@@ -5,7 +5,7 @@
     <h1>All Posts</h1>
   </div>
   <div class="col-md-2">
-      {!! Html::linkRoute('posts.create', 'Create New Post', null, array('class'=>'btn .btn-h1-spacing btn-lg btn-success')) !!}
+      {!! Html::linkRoute('posts.create', 'Create New Post', null, array('class'=>'btn .btn-h1-spacing btn-sm btn-success')) !!}
   </div>
 </div>
 

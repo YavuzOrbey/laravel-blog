@@ -2,9 +2,12 @@
 @extends('main')
 
 @section('content')
-Welcome to my website. Feel free to register and start blogging. Enjoy!
+<div class='row'>
+    <div class="col-sm-12">
+        <h2>Welcome to my website. Feel free to register and start blogging. Enjoy!</h2>
+    </div>
+</div>
 
-<div id="like_button_container"></div>
 
 @endsection
 
