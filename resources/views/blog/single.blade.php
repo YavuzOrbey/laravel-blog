@@ -1,6 +1,8 @@
 @extends('main')
 @section('stylesheets')
 {{Html::style('css/parsley.css') }}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
 @endsection
 @section('content')
 <div class="row mt-2">
@@ -47,7 +49,7 @@
     
                 {!! Form::close() !!}
                 @elseif (!Auth::check())
-                <span>Only logged in users can comment on posts. Login to comment on this post!</span>
+                <span>Only logged in users can comment on or like posts. Login to comment on this post!</span>
                 
                 @endif
         </div>
@@ -60,4 +62,6 @@
 
 @section('scripts')
 {{Html::script('js/parsley.min.js') }}
+
+{{Html::script('js/script.js')}}
 @endsection

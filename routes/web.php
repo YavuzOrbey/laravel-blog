@@ -35,3 +35,5 @@ Route::get('logout', 'Auth\LoginController@logout', function () {
     return abort(404);
 });
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/likes', 'LikeController@store');
+Route::delete('/likes', 'LikeController@delete');
