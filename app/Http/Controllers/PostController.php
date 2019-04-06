@@ -81,10 +81,13 @@ class PostController extends Controller
 
             //save image
             if($request->hasFile('image')){
+                
                 $image = $request->image;
                 $filename = time() . "." . $image->getClientOriginalExtension();
                 $location = public_path('images/' . $filename);
-                Image::make($image)->resize(800, 400)->save($location)->destroy();
+                Image::make($image)->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($location)->destroy();
 
                 $post->image = $filename;
             }

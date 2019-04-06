@@ -14,8 +14,10 @@
 Route::get('/', 'PagesController@getIndex');
 
 Route::get('about', 'PagesController@getAbout');
+
 Route::get('contact', 'PagesController@getContact');
 Route::post('contact', 'PagesController@sendEmail')->name('send.email'); //route name for controller action
+Route::get('{username}/profile', 'PagesController@getProfile')->name('profile');
 Route::get('{username}/blog/{slug}', 'BlogController@getSingle')->name('blog.single')->where('slug', '[\w\d\-\_]+');
 Route::get('{username}/blog/', 'BlogController@getIndex')->name('blog.index');
 Route::get('/blog/random', 'BlogController@getRandom')->name('blog.random');

@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">{{ config('app.name') }}</a>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand nav-link" href="/">{{ config('app.name') }}</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,12 +7,12 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item {{ Request::is('/') ? 'active': '' }}">
-        <a class="nav-link " href="/">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
 
       @auth
       <li class="nav-item {{ Request::is('blog') ? 'active': '' }}">
-      <a class="nav-link " href="/{{Auth::user()->username}}/blog">My Blog</a>
+      <a class="nav-link" href="/{{Auth::user()->username}}/blog">My Blog</a>
       </li>
       @endauth 
       <li class="nav-item {{ Request::is('about') ? 'active': '' }}">
@@ -24,15 +24,15 @@
       </li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0">
+    {{-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    </form> --}}
     
-    <ul class="navbar-nav">
+    <ul class="navbar-nav ">
       @guest
       <li class="nav-item dropleft">
-        <a class="nav-link dropdown-toggle" href="{{ route('login') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle text-white" href="{{ route('login') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Login
         </a>
         
@@ -85,17 +85,18 @@
       
       @if (Route::has('register'))
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+        <a class="nav-link text-white" href="{{ route('register') }}">{{ __('Register') }}</a>
       </li>
       @endif
             
       @else
-      <li class="nav-item dropleft">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{ Auth::user()->name }}
+      <li class="nav-item dropleft ">
+        <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ Auth::user()->username }}
         </a>
         
         <div class="dropdown-menu w-auto" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{route('profile', ['username' => Auth::user()->username])}}">My Profile</a>
           <a class="dropdown-item" href="{{route('posts.index')}}">Posts</a>
           <a class="dropdown-item" href="{{route('categories.index')}}">Categories</a>
           <a class="dropdown-item" href="{{route('tags.index')}}">Tags</a>

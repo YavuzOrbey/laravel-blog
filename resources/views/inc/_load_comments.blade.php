@@ -31,7 +31,7 @@
                     
                 
                 <div class="col-2 social-container">
-                    <span class="share-button">Share</span>
+                    <span class="share-button"><i class="fas fa-share-alt"></i></span>
                     <span class="like-container">
                             @if(Auth::user() !== $comment->user)
                             {{-- may want to replace data-like true false with the id of the like if there doesn't exist a like yet then it should be null or 0--}}

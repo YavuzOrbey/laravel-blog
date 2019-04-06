@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Mail\ContactMe;
+use App\User;
 use Session;
 class PagesController extends Controller{
 
@@ -36,7 +37,13 @@ class PagesController extends Controller{
         $full = array('first', 'last');
         return view('pages.about', compact($full));
     }
-
+    public function getProfile($username){
+        if($user = User::where('username', $username)->first()){
+            return view('pages.profile', compact('user'));
+        }
+        else
+        abort(404);
+    }
     public function getContact(){
         return view('pages.contact');
     }

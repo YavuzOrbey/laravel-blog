@@ -2,7 +2,7 @@
   <body>
     @include('inc._nav')
 
-    <div class="container white mt-3 p-4">
+    <div class="container white mt-3 p-4 shadow">
       @include('inc._messages')
       @yield('content')
       <hr>
