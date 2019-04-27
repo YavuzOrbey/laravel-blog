@@ -180,3 +180,9 @@ span[data-like="true"] {
     height: 18px;
     text-align: right;
 }
+.portrait-icon {
+    border-radius: 10px;
+}
+.profile {
+    font-size: 18px;
+}

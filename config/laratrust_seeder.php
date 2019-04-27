@@ -11,7 +11,18 @@ return [
             'users' => 'c,r,u,d',
             'profile' => 'r,u'
         ],
+        'editor' => [
+            'users' => 'c,r,u,d',
+            'profile' => 'r,u'
+        ],
+        'author' => [
+            'users' => 'r',
+            'profile' => 'r,u'
+        ],
         'user' => [
+            'profile' => 'r,u'
+        ],
+        'subscriber' => [
             'profile' => 'r,u'
         ],
     ],

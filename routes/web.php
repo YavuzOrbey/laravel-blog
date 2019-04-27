@@ -27,6 +27,14 @@ Route::resources([
 Route::resource('comments', 'CommentController')->except(['create', 'show']);
 Route::resource('categories', 'CategoryController')->except(['create']);
 Route::resource('tags', 'TagController')->except(['create']);
+
+Route::prefix('admin')->group(function(){
+    Route::get("/", 'AdminController@index');
+    Route::get("/dashboard", 'AdminController@dashboard')->name('admin.dashboard');
+    Route::resource("/users", 'UserController');
+    Route::resource("/permissions", 'PermissionController');
+    Route::resource("/roles", 'RoleController')->except('destroy');
+});
 Auth::routes(); //using artisan command php artisan make:auth sets up routing, controllers, views etc.
 
 /* for some reason a get request isnt created for logout but just in case a user decides to type the website name/logout we can:

@@ -14,7 +14,6 @@
             <div class="card-body bg-light">
                 <dl class="dl-horizontal">
                     <dt>URL Slug:</dt>
-                    <!-- DONT FORGET need to put username if its going to route blog.single -->
                     <dd><a href="{{route('blog.single', ['username' => Auth::user()->username, 'slug'=>$post->slug])}}">View in blog </a></dd>
                     <dt>Category</dt>
                     <dd>{{$post->category->name}}</dd>

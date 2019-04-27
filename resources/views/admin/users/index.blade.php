@@ -1,0 +1,29 @@
+@extends('layouts.admin')
+
+
+@section('content')
+<h1>Manage Users</h1>
+<a href="{{route('users.create')}}">Create User</a>
+<table class="table table-bordered table-hover table-sm " >
+        <caption>List of users</caption>
+    <thead  class="thead-light">
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Role</th>
+        <th scope="col">Join Date</th>
+        <th scope="col">Actions</th>
+    </thead>
+    <tbody>
+        @foreach ($users as $user)
+        <tr>
+        <td><a href="{{route('users.show', ['id'=>$user->id])}}">{{$user->username}}</a></td>
+        <td>{{$user->email}}</td>
+        <td>{{$user->roles->first()->display_name}}</td>
+        <td>{{$user->created_at->toFormattedDateString()}}</td>
+        <td><a href="{{route('users.edit', ['user'=>$user])}}">Edit</a></td>
+    </tr>
+        @endforeach
+        {!! $users->links() !!}
+    </tbody>
+</table>
+@stop

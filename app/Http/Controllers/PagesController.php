@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Mail\ContactMe;
 use App\User;
+use App\Post;
+use App\Comment;
 use Session;
 class PagesController extends Controller{
 
@@ -39,7 +41,9 @@ class PagesController extends Controller{
     }
     public function getProfile($username){
         if($user = User::where('username', $username)->first()){
-            return view('pages.profile', compact('user'));
+            $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(3);
+            $comments = Comment::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(3);
+            return view('pages.profile', compact('user', 'posts', 'comments'));
         }
         else
         abort(404);

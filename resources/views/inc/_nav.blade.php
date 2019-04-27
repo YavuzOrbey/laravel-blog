@@ -96,6 +96,7 @@
         </a>
         
         <div class="dropdown-menu w-auto" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{route('admin.dashboard')}}">Dashboard</a>
           <a class="dropdown-item" href="{{route('profile', ['username' => Auth::user()->username])}}">My Profile</a>
           <a class="dropdown-item" href="{{route('posts.index')}}">Posts</a>
           <a class="dropdown-item" href="{{route('categories.index')}}">Categories</a>
