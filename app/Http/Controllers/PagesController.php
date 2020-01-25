@@ -43,6 +43,7 @@ class PagesController extends Controller{
         if($user = User::where('username', $username)->first()){
             $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(3);
             $comments = Comment::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(3);
+            
             return view('pages.profile', compact('user', 'posts', 'comments'));
         }
         else
@@ -64,7 +65,7 @@ class PagesController extends Controller{
             'subject' => $request->input('subject'),
             'message' => $request->input('message')
         ];
-        Mail::to("yavuz.orbey@gmail.com")->send(new ContactMe($data));
+        Mail::to("yavuz.orbey@gmail.com")->send(new ContactMe($data, $request));
         Session::flash('success', 'Email sent!');
         return redirect()->route('send.email');
     }

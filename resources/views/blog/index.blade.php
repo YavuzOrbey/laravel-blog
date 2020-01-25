@@ -1,6 +1,8 @@
 
 @extends('main')
+@section('stylesheets')
 
+@stop
 @section('content')
 <div class="jumbotron bg">
     <div class="container">
@@ -11,28 +13,36 @@
 
 
 <div class="container">
+    <div class="row">
         <div class="row">
-                <div class="col-md-8">
-                    @foreach ($posts as $post)
-                    <div class="blog-post">
-                          <h3>{{$post->title}}</h3>
-                          <p>{{ substr(strip_tags($post->body), 0, 200)}}{{ strlen(strip_tags($post->body)) > 200 ? "...": ""}}</p>
-                          {!! Html::linkRoute('blog.single', 'Read more ', array($username, $post->slug), array('class'=>'btn btn-outline-secondary btn-sm')) 
-                          // Also can use url() or route(). Read more on these
-                          !!}
+            @foreach ($posts as $post)
+            <div class="blog-post col-md-3">
+                {{-- <img src="{{asset('images/' . $post->image . "-width-200.jpeg")}}"> --}}
+                <h4><a href="#">{{$post->category->name}}</a></h4>
+                <time datetime="{{date('Y-m-d H:i', strtotime($post->created_at))}}">
+                    {{date('m/d/y', strtotime($post->created_at)) . " " . date('g:i A', strtotime($post->created_at))}}
+                </time>
+            
+            </div>
+            <div class="col-md-9">
+                <h4>{{$post->title}}</h4>
+                <p>{{ substr(strip_tags($post->body), 0, 200)}}{{ strlen(strip_tags($post->body)) > 200 ? "...": ""}}</p>
+                {!! Html::linkRoute('blog.single', 'Read more ', array($username, $post->slug), array('class'=>'btn btn-outline-secondary btn-sm')) 
+                // Also can use url() or route(). Read more on these
+                !!}
+            </div>
+            <hr>
+            @endforeach
+            <div class="col-md-3 offset-md-1">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-12">
+                    {!! $posts->links() !!}
                     </div>
-                    <hr>
-                    @endforeach
                 </div>
-                <div class="col-md-3 offset-md-1">
-                    <div class="row justify-content-md-center">
-                        <div class="col-md-12">
-                              {!! $posts->links() !!}
-                        </div>
-                    </div>
-                    
-                  </div>
-              </div>
+            </div>
+        </div>
+        
+    </div>
 </div>
 
 @endsection

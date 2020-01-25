@@ -2,8 +2,14 @@
 
 
 @section('content')
-<h1>Manage Users</h1>
-<a href="{{route('users.create')}}">Create User</a>
+<div class="row">
+        <div class="col-sm-6">
+            <h1>Manage Users</h1>
+        </div>
+        <div class="col-sm-6">
+                <a href="{{route('users.create')}}" class="btn btn-block btn-primary">Create User</a>
+        </div>
+    </div>
 <table class="table table-bordered table-hover table-sm " >
         <caption>List of users</caption>
     <thead  class="thead-light">

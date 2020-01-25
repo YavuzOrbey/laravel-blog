@@ -5,7 +5,7 @@
 
 <!-- Select2 CDN -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-{{Html::script('js/wysiwyg.js') }}
+
 @endsection
 @section('content')
     <div class="row justify-content-center">
@@ -41,7 +41,7 @@
 
                 {{Form::label('body', 'Post Body:') }}
                 {{Form::hidden('body', null, array('id'=>'hidden-editor', 'required'=>'')) }}
-                <section id="editor" class="textarea form-control" contenteditable></section>
+                <section id="editor" class="textarea form-control" contenteditable style="display:inline-block">{{old('body')}}</section>
 
                 {{Form::submit('Create', ['id'=>'submit-btn', 'class'=>'btn btn-primary btn-lg btn-block', 'style'=> 'margin-top: 20px']) }}
 
@@ -56,6 +56,7 @@
 @section('title', '| Create Post')
 
 @section('scripts')
+{{Html::script('js/wysiwyg.js') }}
 {{Html::script('js/parsley.min.js') }}
 <!-- Select2 CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>

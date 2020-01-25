@@ -14,6 +14,7 @@ use Purifier;
 use Session;
 use Image;
 use Storage;
+use File;
 class PostController extends Controller
 {
     public function __construct(){
@@ -68,7 +69,7 @@ class PostController extends Controller
             'body' => 'required',
             'slug' => ['bail', 'required', 'alpha_dash', 'min:5','max:190', Rule::unique('posts')->where(function ($query) {
                 return $query->where('user_id', Auth::id());})],
-            'image'=> 'sometimes|required|image'
+            'image'=> 'sometimes|required|image|dimensions:max_width=600,max_height=600|max:6000'
         ]);
 
         //store in database
@@ -77,19 +78,25 @@ class PostController extends Controller
             $post->title = $request->input('title');
             $post->category_id = $request->input('category');
             $post->slug = $request->input('slug');
-            $post->body = Purifier::clean($request->input('body'));
-
+            $post->body = Purifier::clean($request->input('body')); 
             //save image
             if($request->hasFile('image')){
                 
-                $image = $request->image;
-                $filename = time() . "." . $image->getClientOriginalExtension();
-                $location = public_path('images/' . $filename);
-                Image::make($image)->resize(500, null, function ($constraint) {
+                $image = $request->image->store('users/' . Auth::id());
+                //$filename = time() . "." . $image->getClientOriginalExtension();
+                //$path = public_path() . 'users/' . Auth::id() . '/images/';
+                /* if(!file_exists($path)){
+                    File::makeDirectory($path);
+                } 
+                        */
+                 //"users/8/XmgrGFyD8Q77yZrxL99eyrleGhutzHE2sZsnNkyi.jpeg"
+                $thumbnail = str_replace(".jpeg", "-width-200.jpeg",$image);
+                $thumbnail = "images/" . $thumbnail;
+                Image::make($request->image)->resize(200, null, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($location)->destroy();
+                })->save($thumbnail)->destroy();
 
-                $post->image = $filename;
+                $post->image = str_replace(".jpeg", "",$image);
             }
         
             $post->save();
@@ -158,7 +165,6 @@ class PostController extends Controller
             'slug' => 'required|alpha_dash|min:5|max:190|unique:posts,slug,' . $id,
             'image'=> 'sometimes|required|image'
         ]);
-
         $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = Purifier::clean($request->input('body'));

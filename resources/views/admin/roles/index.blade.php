@@ -2,8 +2,14 @@
 
 
 @section('content')
-<h1>Manage Roles</h1>
-<a href="{{route('roles.create')}}">Create Role</a>
+<div class="row">
+        <div class="col-sm-6">
+            <h1>Manage Roles</h1>
+        </div>
+        <div class="col-sm-6">
+                <a href="{{route('roles.create')}}" class="btn btn-block btn-primary">Create Role</a>
+        </div>
+    </div>
 <table class="table table-bordered table-hover table-sm " >
         <caption>List of Roles</caption>
     <thead  class="thead-light">

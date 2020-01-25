@@ -13,9 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CategoryTableSeeder::class);
         $this->call(TagsTableSeeder::class);
+        $this->call(LaratrustSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(PostsTableSeeder::class);
         $this->call(CommentTableSeeder::class);
-        $this->call(LaratrustSeeder::class);
+        
     }
 }

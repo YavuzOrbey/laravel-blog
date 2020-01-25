@@ -62,14 +62,15 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    // dasds
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        $user->roles()->sync(6);
+        return $user;
     }
 }

@@ -1,3 +1,7 @@
+* {
+    margin: 0;
+    padding: 0;
+}
 nav {
     font-family: "Open Sans", Arial, sans-serif;
     /* background: linear-gradient(
@@ -5,7 +9,7 @@ nav {
         rgba(192, 213, 142, 1),
         rgba(177, 118, 155, 1)
     ); */
-    background: #636363;
+    background: #252525;
     color: white;
     height: 56px;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05),
@@ -17,14 +21,15 @@ nav {
     color: white;
 }
 body {
-    font-family: Helvetica, Arial, sans-serif;
-    background: #e2d1c3;
-    background: linear-gradient(
+    font-family: "Roboto", sans-serif;
+    background-color: #fff;
+    /* background: #e2d1c3; */
+    /*     background: linear-gradient(
             90deg,
             rgba(253, 252, 251, 1),
             rgba(226, 209, 195, 0.6)
         ),
-        url(../images/bg1.jpeg);
+        url(../images/bg1.jpeg); */
     background-size: cover;
     height: 100vh;
     background-attachment: fixed;
@@ -185,4 +190,50 @@ span[data-like="true"] {
 }
 .profile {
     font-size: 18px;
+}
+
+.social-media-share li {
+    display: inline-block;
+    font-size: 24px;
+}
+
+svg text {
+}
+.title-card {
+    height: 260px;
+    position: relative;
+    background-image: url("https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
+    background-size: cover;
+}
+.title-card h1 {
+    text-align: center;
+    color: #fff;
+    padding: 30px 10px;
+}
+.author-info {
+    position: absolute;
+    background: rgba(37, 37, 37, 0.95);
+    padding: 20px 15px;
+    right: 0;
+    bottom: 0;
+    width: 600px;
+    height: 60px;
+}
+.author-info > h4 {
+    display: inline-block;
+    position: relative;
+    top: -5px;
+    font-size: 1.3em;
+    color: white;
+}
+.author-info .author-name,
+.author-info .created-at {
+    margin: 0 10px;
+    font-weight: 300;
+}
+.blog-post {
+    margin-top: 10px;
+}
+.sidebar {
+    position: absolute;
 }

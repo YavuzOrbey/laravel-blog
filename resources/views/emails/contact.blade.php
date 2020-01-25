@@ -1,2 +1,3 @@
 From: {{$email}}/ {{$name}}
-<p>{{$message_text}}</p>
+<p>Message: {{$message_text}}</p>
+<p>IP Address: {{$ip}}</p>

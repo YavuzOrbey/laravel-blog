@@ -2,8 +2,15 @@
 
 
 @section('content')
-<h1>Manage Permissions</h1>
-<a href="{{route('permissions.create')}}">Create Permission</a>
+<div class="row">
+    <div class="col-sm-6">
+        <h1>Manage Permissions</h1>
+    </div>
+    <div class="col-sm-6">
+            <a href="{{route('permissions.create')}}" class="btn btn-block btn-primary">Create Permission</a>
+    </div>
+</div>
+
 <table class="table table-bordered table-hover table-sm " >
         <caption>List of permissions</caption>
     <thead  class="thead-light">

@@ -13,18 +13,19 @@ class ContactMe extends Mailable
 
 
     //public properties 
-    public $email, $name, $subject, $message_text;
+    public $email, $name, $subject, $message_text, $ip;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $request)
     {
         $this->email = $data['email'];
         $this->name = $data['name'];
         $this->subject = $data['subject'];
         $this->message_text = $data['message'];
+        $this->ip = $request->ip();
     }
 
     /**

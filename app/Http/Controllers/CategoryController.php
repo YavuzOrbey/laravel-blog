@@ -9,6 +9,7 @@ class CategoryController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        $this->middleware('role:administrator|superadministrator|editor');
     }
     /**
      * Display a listing of the resource.

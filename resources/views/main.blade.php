@@ -1,8 +1,8 @@
 @include('inc._head')
   <body>
     @include('inc._nav')
-
-    <div class="container white mt-3 p-4 shadow">
+    @include('inc._sidebar')
+    <div class="container white mt-3 p-4">
       @include('inc._messages')
       @yield('content')
       <hr>
