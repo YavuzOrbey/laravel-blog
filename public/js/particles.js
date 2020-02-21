@@ -34,7 +34,7 @@ class Particle {
     draw() {
         noStroke();
         fill(`rgba(70,70,70,${this.transparency})`);
-        rect(this.pos.x, this.pos.y, 5, 5);
+        circle(this.pos.x, this.pos.y, 5);
     }
 
     update() {
