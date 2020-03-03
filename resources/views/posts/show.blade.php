@@ -56,16 +56,19 @@
             </tr>
           </thead>
           <tbody>
-        @foreach ($post->comments as $comment)
-              <tr>
-                <td><span class='ref-name'>{{$comment->comment_text}}</span></td>
-                <td><a href="/{{$comment->user->username}}/blog">{{$comment->user->username}}</a></td>
-                {!! Form::open(['route'=> ['comments.destroy', $comment], 'method'=>'DELETE'])!!}
-                <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></td>
-                {!! Form::close() !!}
-              </tr>
-        @endforeach
-  
+            <tr id="tr"></tr>
+
+          <noscript>
+            @foreach ($post->comments as $comment)
+                <tr>
+                  <td><span class='ref-name'>{{$comment->comment_text}}</span></td>
+                  <td><a href="/{{$comment->user->username}}/blog">{{$comment->user->username}}</a></td>
+                  {!! Form::open(['route'=> ['comments.destroy', $comment], 'method'=>'DELETE'])!!}
+                  <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></td>
+                  {!! Form::close() !!}
+                </tr>
+            @endforeach
+          </noscript>
           </tbody>
         </table>
       </div>
@@ -75,4 +78,50 @@
 
 @section('scripts')
 {{Html::script('js/parsley.min.js') }}
-@endsection
+<script src="{{ asset('js/app.js') }}"></script>
+<script>
+  var tr = document.getElementById('tr');
+  var myTr = document.createElement("tr");
+  myTr.setAttribute("v-for", "comment in comments");
+  myTr.innerHTML = `<td><span class='ref-name'>@{{comment.comment_text}}</span></td>
+                <td><a v-bind:href="'/'+comment.user.username + '/blog'">@{{comment.user.username}}</a></td>`;
+  tr.parentNode.replaceChild(myTr, tr);
+      const app = new Vue({
+          el: '#app',
+          data:  {
+              comments: {},
+              commentBox: '',
+              post: {!! $post->toJson() !!},
+              user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!}
+          },
+          mounted() {
+              this.getComments();
+          },
+          methods: {
+              getComments() {
+                  axios.get('/api/posts/'+this.post.id+'/comments')
+                       .then((response) => {
+                           this.comments = response.data
+                       })
+                       .catch(function (error) {
+                           console.log(error);
+                       }
+                  );
+              },
+              postComment() {
+                  axios.post('/api/posts/'+this.post.id+'/comment', {
+                      api_token: this.user.api_token,
+                      body: this.commentBox
+                  })
+                  .then((response) => {
+                      this.comments.unshift(response.data);
+                      this.commentBox = '';
+                  })
+                  .catch((error) => {
+                      console.log(error);
+                  })
+              }
+          }
+      })
+</script>
+@stop

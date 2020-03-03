@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
+use App\Traits\SaveApiToken;
 use App\User;
 use App\Role;
 use Hash;
@@ -12,6 +12,7 @@ use Session;
 use Validator;
 class UserController extends Controller
 {
+    use SaveApiToken;
     public function __construct(){
         $this->middleware('auth');
         $this->middleware('role:superadministrator|administrator');
@@ -24,7 +25,6 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('created_at', 'desc')->paginate(10);
-
         return view('admin.users.index', compact('users'));
     }
 
@@ -98,6 +98,7 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $user = is_string($user) ? User::with('roles')->findOrfail($user): $user;
+
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
@@ -110,18 +111,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $validator = Validator::make($request->all(), 
         ['name'=>'max:190',
         'email' =>Rule::unique('users')->ignore($id), 
         'username' => ['required', 'max:190', Rule::unique('users', 'username')->ignore($id)],
         'password'=>Rule::requiredIf(!isset($request->auto))])->validate();
         //$validatedData = $request->validate(['name'=>'required|max:190', 'email' => ['required', 'email', Rule::unique('users')->ignore($id)], 'password'=>'required']);
-        
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->username = $request->username;
         $user->password = isset($request->auto) ? Hash::make("password"): Hash::make($request->password);
+        $this->saveApiToken($request);
         if($user->save()){
             $user->roles()->sync($request->role);
             Session::flash('success', 'User successfully updated!');

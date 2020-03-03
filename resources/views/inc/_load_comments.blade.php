@@ -1,7 +1,10 @@
 <div class="row mt-2">
     <div class="col-md-12">
-        <ul class="">
+
         <h4>Comments <small>{{$post->comments->count() }} total</small></h4>
+        <ul >
+            <li id="li"></li>
+        <noscript>
         @foreach($post->comments as $comment) 
         <li class="comment container" data-comment="{{$comment->id}}">
             <div class="row mt-2">
@@ -9,7 +12,9 @@
                     <img class="portrait-icon" src="{{ 'https://www.gravatar.com/avatar/' .  md5( strtolower( trim($comment->user->email)))}}">
                 </div>
                 <div class="col-sm-7 username"><a href="/{{$comment->user->username}}/blog">{{$comment->user->username   /*$users[$key]->username didn't even need to send the users */}}</a></div>
-                <div class="col-sm-4 date-time-display"><span>Posted on {{ date('m/d/Y g:i A', strtotime($comment->created_at)) . ($comment->created_at == $comment->updated_at ? ' ': ' Edited on: ' . date('m/d/Y, g:i A', strtotime($comment->updated_at)))}}</span></div>
+                <div class="col-sm-4 date-time-display">
+                    <span>Posted on {{ date('m/d/Y g:i A', strtotime($comment->created_at)) . ($comment->created_at == $comment->updated_at ? ' ': ' Edited on: ' . date('m/d/Y, g:i A', strtotime($comment->updated_at)))}}</span>
+                </div>
             </div>
             <div class="row mt-4">
                 <div class="col-sm-{{ Auth::user() == $comment->user ? '10': '12'}} comment-text">
@@ -47,6 +52,8 @@
             
         </li>
         @endforeach
-        </ul>
+        </noscript>
+
+    </ul>
     </div>
 </div>

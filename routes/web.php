@@ -24,7 +24,10 @@ Route::get('/blog/random', 'BlogController@getRandom')->name('blog.random');
 Route::resources([
     'posts' => 'PostController'
     ]);
-Route::resource('comments', 'CommentController')->except(['create', 'show']);
+Route::middleware('auth')->group(function(){
+    Route::resource('comments', 'CommentController')->except(['create', 'show']);
+});
+
 Route::resource('categories', 'CategoryController')->except(['create']);
 Route::resource('tags', 'TagController')->except(['create']);
 

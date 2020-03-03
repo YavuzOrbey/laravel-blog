@@ -13,6 +13,5 @@
     {{Html::style('css/style.css')}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('stylesheets')
-
     <title>Yavuz Orbey @yield('title')</title> <!--title needs to change for different pages -->
   </head>
