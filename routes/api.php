@@ -16,7 +16,8 @@ use Illuminate\Http\Request;
 
 Route::get('/posts/{post}/comments', 'CommentController@apiIndex');
 Route::middleware('auth:api')->group(function () {
-
+    Route::get('/messages/{user_to}', 'PrivateMessageController@index');
+    Route::post('/messages/{user_to}', 'PrivateMessageController@store');
     Route::post('/posts/{post}/comment', 'CommentController@apiStore');
 
 });

@@ -10,21 +10,19 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
-
-use App\Comment;
-class NewComment implements ShouldBroadcastNow //change this later
+use App\PrivateMessage;
+class NewPrivateMessage implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $comment;
-    public $number = 0;
+    public $privateMessage;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Comment $comment)
+    public function __construct(PrivateMessage $privateMessage)
     {
-        $this->comment = $comment;
+        $this->privateMessage = $privateMessage;
     }
 
     /**
@@ -34,16 +32,15 @@ class NewComment implements ShouldBroadcastNow //change this later
      */
     public function broadcastOn()
     {
-        //need to create a dynamic channel for each post
-        return [new Channel("post." . $this->comment->post->id), new Channel('comments_' . $this->comment->post->user->id)];
+        $channel = $this->privateMessage->user_from->id+$this->privateMessage->user_to->id;
+        return new Channel("private_message_" . $channel);
     }
     public function broadcastWith(){
         return [
-            'comment_text' => $this->comment->comment_text,
-            'user'=>[
-                'username'=>$this->comment->user->username,
-                'avatar' => ""
-            ],
-            'created_at' => $this->comment->created_at->toDateTimeString()];
+            'from' => $this->privateMessage->user_from->username,
+            'to' =>  $this->privateMessage->user_to->username,
+            'text' => $this->privateMessage->text,
+            'created_at' => $this->privateMessage->created_at->format('H:i:s')
+        ];
     }
 }
