@@ -93,6 +93,7 @@
       <li class="nav-item dropleft ">
         <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ Auth::user()->username }}
+          <span id="notifications"></span>
         </a>
         
         <div class="dropdown-menu w-auto" aria-labelledby="navbarDropdown">
@@ -115,18 +116,3 @@
     </ul>
   </div>
 </nav>
-      
-      {{-- <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-          <a class="p-2 text-muted" href="#">PS1</a>
-          <a class="p-2 text-muted" href="#">PS2</a>
-          <a class="p-2 text-muted" href="#">PS3</a>
-          <a class="p-2 text-muted" href="#">SNES</a>
-          <a class="p-2 text-muted" href="#">N64</a>
-          <a class="p-2 text-muted" href="#">GCN</a>
-          <a class="p-2 text-muted" href="#">GBA</a>
-          <a class="p-2 text-muted" href="#">NDS</a>
-          <a class="p-2 text-muted" href="#">Wii</a>
-          <a class="p-2 text-muted" href="#">Wii U</a>
-        </nav>
-      </div> --}}

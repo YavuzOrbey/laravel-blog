@@ -2,21 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Post;
+use App\Comment;
 use Session;
+use App\Events\NewComment;
 class CommentController extends Controller
 {
 
-    public function __construct(){
-        $this->middleware('auth');
-    }
 
     public function index(){
         $comments = Comment::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(10);
         return view('comments.index', compact('comments'));
+    }
+    
+    // API METHODS
+    public function apiIndex(Post $post){ //this is type hinting in usage
+        $comments = $post->comments()->with('user')->latest()->get();
+        foreach ($comments as $key => $comment) {
+            $comment["user"]['avatar'] = md5( strtolower( trim($comment->user->email)));
+        }
+        return response()->json($comments);
+    }
+
+    public function apiStore(Request $request, Post $post){
+        $comment = $post->comments()->create([ 
+            'comment_text'=>$request->body,
+            'user_id' => Auth::id()
+        ]); //there's a save method embedded inside create() method
+        $comment = Comment::where('id', $comment->id)->with('user')->first();
+        //event(new NewComment($comment));
+        broadcast(new NewComment($comment))->toOthers(); // this is the better way to do it
+        return $comment->toJson();
     }
     /**
      * Store a newly created resource in storage.

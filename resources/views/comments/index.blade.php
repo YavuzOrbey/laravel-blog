@@ -26,7 +26,7 @@
             <tr>
                 <td><span class='ref-name'>{{$comment->comment_text}}</span>
                     {!! Form::open(['route'=> ['comments.update', $comment], 'method'=>'PUT','class'=>'edit-form'])!!}
-                    {{Form::textarea('comment', $comment->comment_text, [ 'placeholder'=>'Enter a comment', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
+                    {{Form::textarea('comment', $comment->comment_text, [ 'placeholder'=>'Enter a comment', 'required'=>'', 'minlength'=>3, 'maxlength'=>190, 'cols'=>0, 'rows'=>0] ) }}
                     {{Form::submit('Save', ['class'=>'btn btn-primary btn-xs ']) }}
                     {!! Form::close() !!}</td>
                     

@@ -24,10 +24,15 @@
         <option value="{{$role->id}}" {{$role->id ===$user->roles->first()->id ? "selected": ""}}>{{$role->display_name}}</option>
             @endforeach
         </select>
+        
     <div>
         <label for="">Password</label>
         <input type="text" id="password" name="password" >
         <input type="checkbox" id="auto" name="auto" value="true">Auto Generate Password
+    </div>
+    <div>
+        <label for="">Add Token Authentication? </label>
+        <input type="checkbox" id="token_auth" name="token_auth">
     </div>
 
     <button>Submit</button>

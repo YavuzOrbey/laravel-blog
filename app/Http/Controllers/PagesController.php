@@ -8,6 +8,7 @@ use App\Mail\ContactMe;
 use App\User;
 use App\Post;
 use App\Comment;
+use App\Category;
 use Session;
 class PagesController extends Controller{
 
@@ -27,8 +28,17 @@ class PagesController extends Controller{
         $posts = Post::latest()->limit(3)->get();
         I prefer the below method but the one above works just as well
         */
-        
-        return view('pages.welcome');
+        // get the most recent posts from different categories and send them to the welcome page
+        $user = User::where('username', 'yavuz')->first();
+        $categories = Category::all(); // HERE
+        foreach ($categories as $key => $category) {
+            $category_posts = Post::where('user_id', $user->id)->where('category_id', $category->id)->get();
+            if($category_posts){
+                $posts[$category->name] = $category_posts;
+            }
+        }
+/*         $posts['Gaming'] = Post::where('user_id', 8)->where('category_id', 2)->orderBy('created_at', 'desc')->take(3)->get(); */
+        return view('pages.welcome', compact('posts'));
     }
 
    

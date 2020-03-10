@@ -12,7 +12,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     {{Html::style('css/style.css')}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
     @yield('stylesheets')
-
+    <style>
+      #notifications{
+        border: 1px solid red;
+        border-radius: 50%;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        color: white;
+        background: red;
+        text-align:center;
+        font-size: 14px;
+        vertical-align: 14px;
+        right: -10px;
+      }
+    </style>
     <title>Yavuz Orbey @yield('title')</title> <!--title needs to change for different pages -->
   </head>

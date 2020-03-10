@@ -31,7 +31,8 @@
                     <hr>
                     <p class="text-center">Yavuz Orbey - Copyright {{ date('Y')}}</p>
                   </div>
+                </div>
               @include('inc._foot')
-    </div>
+
 </body>
 </html>

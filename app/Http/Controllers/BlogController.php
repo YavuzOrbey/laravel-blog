@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\User;
 use App\Comment;
+use App\Category;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
@@ -37,8 +38,8 @@ class BlogController extends Controller
                     // didn't need to send the users at all just needed to use the hasmany relationship the users had with comments
                     //$users = DB::table('users')->join('comments', 'users.id', '=', 'comments.user_id')->where('comments.post_id', '=', $post->id)->select('users.username')->get();
                     $recentPosts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->limit(5)->get();
-                    
-                    return view('blog.single', compact('post', 'recentPosts'));
+                    $category = Category::where('id', $post->category_id)->first();
+                    return view('blog.single', compact('post', 'recentPosts', 'category'));
                 //}
 
                 
