@@ -14,7 +14,7 @@ class BlogController extends Controller
     public function __construct(){
        
     }
-    public function getIndex($username){
+    public function getIndex($username='yavuz'){
         //fetch posts from database based on the userid
 
         //first find out what the userid is based on username 

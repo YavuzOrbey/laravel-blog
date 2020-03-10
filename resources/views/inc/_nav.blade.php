@@ -10,11 +10,11 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
 
-      @auth
+
       <li class="nav-item {{ Request::is('blog') ? 'active': '' }}">
-      <a class="nav-link" href="/{{Auth::user()->username}}/blog">My Blog</a>
+      <a class="nav-link" href="/blog">Blog</a>
       </li>
-      @endauth 
+
       <li class="nav-item {{ Request::is('about') ? 'active': '' }}">
       <a class="nav-link" href="/about">About</a>
       </li>

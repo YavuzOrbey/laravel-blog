@@ -13,7 +13,7 @@ use App\Category;
 use Purifier;
 use Session;
 use Image;
-use Storage;
+use Storage; 
 use File;
 class PostController extends Controller
 {

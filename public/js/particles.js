@@ -18,23 +18,28 @@ function draw() {
 }
 
 class Particle {
-    transparency = 0.5;
-    fading = true;
-    constructor() {
+    constructor(
+        pos = createVector(random(width), random(height)),
+        velocity = createVector(random(-2, 2), random(-2, 2)),
+        size = 10,
+        transparency = 0.5,
+        fading = true
+    ) {
         // position
-        this.pos = createVector(random(width), random(height));
+        this.pos = pos;
 
         //velocity
-        this.velocity = createVector(random(-2, 2), random(-2, 2));
-
+        this.velocity = velocity;
         //size
-        this.size = 10;
+        this.size = size;
+        this.fading = fading;
+        this.transparency = transparency;
     }
 
     draw() {
         noStroke();
         fill(`rgba(70,70,70,${this.transparency})`);
-        rect(this.pos.x, this.pos.y, 5, 5);
+        circle(this.pos.x, this.pos.y, this.size);
     }
 
     update() {
@@ -51,7 +56,9 @@ class Particle {
         }
         this.edges();
     }
-
+    setVelocity(velocity) {
+        this.velocity = velocity;
+    }
     //detect edges
     edges() {
         if (this.pos.x < 0 || this.pos.x > width) {
