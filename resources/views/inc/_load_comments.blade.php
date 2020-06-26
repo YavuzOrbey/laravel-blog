@@ -2,8 +2,9 @@
     <div class="col-md-12">
 
         <h4>Comments <small>{{$post->comments->count() }} total</small></h4>
-        <ul >
+        <ul>
             <li id="li"></li>
+            <comment-app></comment-app>
         <noscript>
         @foreach($post->comments as $comment) 
         <li class="comment container" data-comment="{{$comment->id}}">

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use App\Traits\SaveApiToken;
 use App\User;
 use App\Role;
+
 use Hash;
 use Session;
 use Validator;
@@ -15,7 +17,7 @@ class UserController extends Controller
     use SaveApiToken;
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('role:superadministrator|administrator');
+        //$this->middleware('role:superadministrator|administrator');
     }
     /**
      * Display a listing of the resource.
@@ -28,6 +30,10 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    public function apiIndex(){
+        $users = User::all();
+        return $users;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -123,7 +129,10 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->username = $request->username;
         $user->password = isset($request->auto) ? Hash::make("password"): Hash::make($request->password);
-        $this->saveApiToken($request);
+        $token = Str::random(60);
+        $user->forceFill([
+            'api_token' => hash('sha256', $token),
+        ]);
         if($user->save()){
             $user->roles()->sync($request->role);
             Session::flash('success', 'User successfully updated!');

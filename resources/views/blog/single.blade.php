@@ -66,7 +66,7 @@
     </div> --}}
 </div>
 @include('inc/_load_comments')
-<div class="row mt-2">
+{{-- <div class="row mt-2">
         <div class="col-md-12" v-if="user">
             <textarea class='form-control' name="body" v-model="commentBox" ></textarea>
             <button @click.prevent="postComment" >Submit</button>
@@ -93,8 +93,7 @@
         <div class="col-md-12" v-else>
             <span>Only logged in users can comment on or like posts. Login to comment on this post!</span>
         </div>
-</div>
-
+</div> --}}
 
 
 @endsection
@@ -104,9 +103,8 @@
 <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 {{Html::script('js/parsley.min.js') }}
-<script src="{{ asset('js/app.js') }}"></script>
 <script>
-    var li = document.getElementById('li');
+    /* var li = document.getElementById('li');
     var myLi = document.createElement("li");
     myLi.setAttribute("v-for", "comment in comments");
     myLi.className = "comment container";
@@ -131,10 +129,75 @@
     </div>
     
     `;
-  
-        li.parentNode.replaceChild(myLi, li);
-const app = new Vue({
-    el: '#app',
+    li.parentNode.replaceChild(myLi, li); */
+    Vue.component('comment-app', {
+        data: function(){
+             return {
+                comments: {},
+                commentBox: '',
+                post: {!! $post->toJson() !!}
+             }
+         },
+        mounted(){
+            this.getComments();
+            this.listen();
+         },
+        methods: {
+            getComments() {
+            axios.get('/api/posts/'+this.post.id+'/comments')
+                 .then((response) => {
+                     this.comments = response.data;
+                 })
+                 .catch(function (error) {
+                     console.log(error);
+                 }
+            );
+            },
+            postComment() {
+            axios.post('/api/posts/'+this.post.id+'/comment', {
+                api_token: this.$root.user.api_token,
+                body: this.commentBox
+            })
+            .then((response) => {
+                this.comments.unshift(response.data);
+                this.commentBox = '';
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            },
+            listen(){
+                Echo.channel("post." + this.post.id).listen('NewComment', (comment)=> this.comments.unshift(comment))
+            }},
+            template: `<div><li v-for="comment in comments" class="comment container" :data-comment="comment.id">
+                <div class="row mt-2">
+        <div class="col-sm-1 portrait-wrapper">
+            <img class="portrait-icon" v-bind:src="'https://www.gravatar.com/avatar/'+comment.user.avatar">
+        </div>
+        <div class="col-sm-7 username"><a v-bind:href="'/'+comment.user.username + '/blog'">@{{comment.user.username}}</a></div>
+        <div class="col-sm-4 date-time-display">
+            <span>Posted on  @{{comment.created_at}} 
+                <template v-if="comment.created_at !== comment.updated_at">
+                    Edited on: @{{comment.updated_at}}</template>
+            </span>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div v-bind:class="[comment.user.username===$root.user ? 'col-sm-10' : 'col-sm-12', 'comment-text']">
+                @{{comment.comment_text}}
+        </div>
+    </div></li><div class="row mt-2">
+        <div class="col-md-12" v-if="$root.user">
+            <textarea class='form-control' name="body" v-model="commentBox" ></textarea>
+            <button @click.prevent="postComment" >Submit</button>
+        </div>
+        <div class="col-md-12" v-else>
+            <span>Only logged in users can comment on or like posts. Login to comment on this post!</span>
+        </div>
+</div></div>`
+     });   
+/* const commentApp = new Vue({
+    el: '#commentApp',
     data:  {
         comments: {},
         commentBox: '',
@@ -172,7 +235,8 @@ const app = new Vue({
         listen(){
             Echo.channel("post." + this.post.id).listen('NewComment', (comment)=> this.comments.unshift(comment))
         }
-    }})
-    
-    </script>
+    }}) */
+
+
+</script>
 @endsection

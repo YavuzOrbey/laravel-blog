@@ -39,7 +39,8 @@ class BlogController extends Controller
                     //$users = DB::table('users')->join('comments', 'users.id', '=', 'comments.user_id')->where('comments.post_id', '=', $post->id)->select('users.username')->get();
                     $recentPosts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->limit(5)->get();
                     $category = Category::where('id', $post->category_id)->first();
-                    return view('blog.single', compact('post', 'recentPosts', 'category'));
+                    $users = User::all();
+                    return view('blog.single', compact('post', 'recentPosts', 'category', 'users'));
                 //}
 
                 

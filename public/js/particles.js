@@ -39,11 +39,7 @@ class Particle {
     draw() {
         noStroke();
         fill(`rgba(70,70,70,${this.transparency})`);
-<<<<<<< HEAD
-        circle(this.pos.x, this.pos.y, this.size);
-=======
         circle(this.pos.x, this.pos.y, 5);
->>>>>>> a952d39dfd87df1846e81b28bc310a7213407f1d
     }
 
     update() {

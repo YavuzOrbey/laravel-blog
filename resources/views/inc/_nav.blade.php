@@ -31,7 +31,7 @@
     
     <ul class="navbar-nav ">
       @guest
-      <li class="nav-item dropleft">
+       <li class="nav-item dropleft">
         <a class="nav-link dropdown-toggle text-white" href="{{ route('login') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Login
         </a>
@@ -90,10 +90,11 @@
       @endif
             
       @else
+     
       <li class="nav-item dropleft ">
         <a class="nav-link dropdown-toggle"  href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ Auth::user()->username }}
-          <span id="notifications"></span>
+        <span id="notifications" v-bind:notifications="notifications">@{{notifications}}</span>
         </a>
         
         <div class="dropdown-menu w-auto" aria-labelledby="navbarDropdown">

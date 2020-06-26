@@ -32,9 +32,20 @@ class NewPrivateMessage implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        $channel = $this->privateMessage->user_from->id+$this->privateMessage->user_to->id;
-        return new Channel("private_message_" . $channel);
+        if($this->privateMessage->user_from->id <  $this->privateMessage->user_to->id){
+            $first = $this->privateMessage->user_from->id;
+            $second= $this->privateMessage->user_to->id;
+          }
+          else{
+            $first  = $this->privateMessage->user_to->id;
+            $second = $this->privateMessage->user_from->id;
+          }
+        return [new Channel("private_message_" . $first . "_" . $second)];
     }
+    public function broadcastAs()
+  {
+      return 'NewPrivateMessage';
+  }
     public function broadcastWith(){
         return [
             'from' => $this->privateMessage->user_from->username,

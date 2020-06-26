@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    z-index: 0;
 }
 nav {
     font-family: "Open Sans", Arial, sans-serif;
@@ -204,17 +205,17 @@ svg text {
     position: relative;
     background-size: cover;
 }
-.programming-header{
-    background-image: url('/images/programming-header.jpg');
+.programming-header {
+    background-image: url("/images/programming-header.jpg");
 }
-.design-header{
-    background-image: url('/images/design-header.jpg');
+.design-header {
+    background-image: url("/images/design-header.jpg");
 }
-.art-header{
-    background-image: url('/images/art-header.jpg');
+.art-header {
+    background-image: url("/images/art-header.jpg");
 }
-.gaming-header{
-    background-image: url('/images/gaming-header.jpg');
+.gaming-header {
+    background-image: url("/images/gaming-header.jpg");
 }
 .title-card h1 {
     text-align: center;
@@ -249,14 +250,13 @@ svg text {
     position: absolute;
     width: 250px;
     font-size: 14px;
-
 }
-.row{
+.row {
     align-content: space-between;
 }
-.item{
-    height: 325px ;
-    display:flex;
+.item {
+    height: 325px;
+    display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -264,26 +264,26 @@ svg text {
     overflow: hidden;
     box-sizing: border-box;
     margin: 10px 0;
-    border-radius: .125rem;
+    border-radius: 0.125rem;
     box-shadow: 0 1px 5px #dcdcdc;
 }
-.programming{
-    background: url('/images/programming-main.jpg');
+.programming {
+    background: url("/images/programming-main.jpg");
     background-size: cover;
 }
-.design{
-    background: url('/images/design-main.jpg');
+.design {
+    background: url("/images/design-main.jpg");
     background-size: cover;
 }
-.art{
-    background: url('/images/art-main.jpg'); 
+.art {
+    background: url("/images/art-main.jpg");
     background-size: cover;
 }
-.gaming{
-    background: url('/images/gaming-main.jpg');
+.gaming {
+    background: url("/images/gaming-main.jpg");
     background-size: cover;
 }
-.blog-title{
+.blog-title {
     font-family: Mirza;
     z-index: 2;
     height: 100%;
@@ -299,50 +299,57 @@ svg text {
     bottom: 0;
     right: 0;
     position: absolute;
-    z-index: 1;   
-  }
-  .item:hover{
+    z-index: 1;
+}
+.item:hover {
     color: white !important;
-  }
-  .item:hover::after{
-      background: rgba(0,0,0,.7)
-  }
-  .item:hover .blog-title {
-      animation: move .5s forwards;
-  }
-  .item:hover .blog-title span{
-      transform: translateX(50%) translateY(50%);
-      color: white !important;
-  }
-  .item:hover .recent-posts{
-      animation: appear 2s ease-out .5s 1 normal forwards;
-      display: block;
-  }
+}
+.item:hover::after {
+    background: rgba(0, 0, 0, 0.7);
+}
+.item:hover .blog-title {
+    animation: move 0.5s forwards;
+}
+.item:hover .blog-title span {
+    transform: translateX(50%) translateY(50%);
+    color: white !important;
+}
+.item:hover .recent-posts {
+    animation: appear 2s ease-out 0.5s 1 normal forwards;
+    display: block;
+}
 
-  @keyframes appear{
-      0%{opacity: 0%}
-      100%{opacity: 100%;}
-  }
-  @keyframes move{
-      0% {transform: translateX(0px) translateY(0px)}
-      100% {transform: translateX(calc(-48%)) translateY(-48%)}
-  }
+@keyframes appear {
+    0% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+@keyframes move {
+    0% {
+        transform: translateX(0px) translateY(0px);
+    }
+    100% {
+        transform: translateX(calc(-48%)) translateY(-48%);
+    }
+}
 
-  .recent-posts{
-      display: none;
-      opacity: 0;
-      z-index: 2;
-      position: absolute;
-      left:40px;
-  }
-  .recent-posts h5{
-      text-decoration: underline;
-  }
-  .recent-posts ul{
-      position: relative;
-      left: 20px;
-
-  }
-  .recent-posts a{
+.recent-posts {
+    display: none;
+    opacity: 0;
+    z-index: 2;
+    position: absolute;
+    left: 40px;
+}
+.recent-posts h5 {
+    text-decoration: underline;
+}
+.recent-posts ul {
+    position: relative;
+    left: 20px;
+}
+.recent-posts a {
     color: white;
-  }
+}

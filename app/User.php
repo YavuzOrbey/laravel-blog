@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'email_verified_at', 'name',
     ];
 
     public function posts()
@@ -42,5 +42,9 @@ class User extends Authenticatable
     public function likes()
     {
         return $this->hasMany('App\Like');
+    }
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role', 'role_user');
     }
 }
