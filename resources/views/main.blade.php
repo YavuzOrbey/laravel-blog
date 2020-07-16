@@ -6,7 +6,7 @@
     <div id="app">
       @include('inc._nav')
       @include('inc._sidebar')
-      <div class="container white">
+      <div class="container white pt-3">
         @include('inc._messages')
         @yield('content')
         <hr>

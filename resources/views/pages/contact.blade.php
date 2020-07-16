@@ -8,7 +8,8 @@
     <form action="{{route('send.email')}}" method="POST" id="contact-form">
             @csrf
             Undergoing Maintenance 
-            {{-- <div class="row">
+            <div class="g-recaptcha" data-sitekey="6LfzOLIZAAAAAKzpksaULqT-fffEeUqYeSTrio4P"></div>
+            <div class="row">
                 <div class="col-md-4">
                     <div class="input-group">
                     <label for="fullname" >Name:</label>
@@ -47,7 +48,6 @@
                     </div>
                 </div>
             </div>
- --}}
             
         </form>                
     </div>
@@ -58,4 +58,8 @@
 
 @section('stylesheets')
 
+@stop
+
+@section('scripts')
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 @stop

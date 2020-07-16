@@ -8,12 +8,12 @@
 {{Html::script('js/wysiwyg.js') }}
 @endsection
 @section('content')
+{!! //Model-Form binding: if you look the text and textarea automatically get post->body and post->title
+    Form::model($post, ['route' => ['posts.update', $post->id], 'method'=>'PUT', 'data-parsley-validate'=>'', 'onSubmit'=> 'return sendForm()', 'files'=> true]) !!}
 <div class="row mt-2">
-        
     <div class="col-md-8">
         
-        {!! //Model-Form binding: if you look the text and textarea automatically get post->body and post->title
-        Form::model($post, ['route' => ['posts.update', $post->id], 'method'=>'PUT', 'data-parsley-validate'=>'', 'onSubmit'=> 'return sendForm()', 'files'=> true]) !!}
+        
         {{Form::label('title', 'Title:') }}
         {{Form::text('title', null, ['class'=>'form-control', 'placeholder'=>'Enter a Title',  'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
 
@@ -45,10 +45,10 @@
         </div>
     </div>
     </div>
-    {!! Form::close() !!}
+
 
 </div>
-
+{!! Form::close() !!}
 @endsection
 @section('title', '| Edit Post')
 
