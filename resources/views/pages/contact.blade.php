@@ -8,7 +8,7 @@
     <form action="{{route('send.email')}}" method="POST" id="contact-form">
             @csrf
             Undergoing Maintenance 
-            <div class="g-recaptcha" data-sitekey="6LfzOLIZAAAAAKzpksaULqT-fffEeUqYeSTrio4P"></div>
+
             <div class="row">
                 <div class="col-md-4">
                     <div class="input-group">
@@ -42,6 +42,7 @@
                             <textarea id="message" name="message" class="textarea-control" placeholder="Type your message here..."></textarea>
                     </div>
                 </div>
+            <div class="g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}"></div>
                 <div class="row">
                     <div class="col-md-3">
                         <input type="submit" class="btn btn-block btn-outline-dark" value="SEND">
