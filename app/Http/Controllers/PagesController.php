@@ -63,7 +63,7 @@ class PagesController extends Controller{
         return view('pages.contact');
     }
 
-    public function sendEmail(Request $request){
+    public function sendEmail(ReCaptchaTestFormRequest $recaptcha, Request $request){
         $validatedData = $request->validate([
             'email'=> 'bail|required|email',
             'fullname' => 'required',
