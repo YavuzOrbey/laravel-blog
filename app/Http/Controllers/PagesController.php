@@ -9,6 +9,7 @@ use App\User;
 use App\Post;
 use App\Comment;
 use App\Category;
+use App\Http\Requests\ReCaptchaTestFormRequest;
 use Session;
 class PagesController extends Controller{
 
