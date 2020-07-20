@@ -8,8 +8,6 @@ class ReCaptcha
 {
     public function validate($attribute, $value, $parameters, $validator){
 
-        $client = new Client();
-
         $response = Http::post('https://www.google.com/recaptcha/api/siteverify',
             ['form_params'=>
                 [
