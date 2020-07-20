@@ -13,7 +13,7 @@ class ReCaptchaTestFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,10 @@ class ReCaptchaTestFormRequest extends FormRequest
     public function rules()
     {
         return [
+            'email'=> 'bail|required|email',
+            'fullname' => 'required',
+            'message' => 'required|min:10',
+            'subject' => 'nullable',
             'g-recaptcha-response'=>'required|recaptcha'
         ];
     }

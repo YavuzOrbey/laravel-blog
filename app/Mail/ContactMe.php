@@ -22,7 +22,7 @@ class ContactMe extends Mailable
     public function __construct($data, $request)
     {
         $this->email = $data['email'];
-        $this->name = $data['name'];
+        $this->name = $data['fullname'];
         $this->subject = $data['subject'];
         $this->message_text = $data['message'];
         $this->ip = $request->ip();

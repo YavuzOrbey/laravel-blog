@@ -65,18 +65,19 @@ class PagesController extends Controller{
     }
 
     public function sendEmail(ReCaptchaTestFormRequest $request){
-        $validatedData = $request->validate([
+/*         $validatedData = $request->validate([
             'email'=> 'bail|required|email',
             'fullname' => 'required',
             'message' => 'required|min:10'
-        ]);
-        $data = [
+        ]); */
+        $validated = $request->validated();
+  /*       $data = [
             'email' => $request->input('email'),
             'name' => $request->input('fullname'),
             'subject' => $request->input('subject'),
             'message' => $request->input('message')
-        ];
-        Mail::to("yavuz.orbey@gmail.com")->send(new ContactMe($data, $request));
+        ]; */
+        Mail::to("yavuz.orbey@gmail.com")->send(new ContactMe($validated, $request));
         Session::flash('success', 'Email sent!');
         return redirect()->route('contact');
     }
