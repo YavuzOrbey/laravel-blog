@@ -2,7 +2,7 @@
 
 namespace App\Validators;
 
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class ReCaptcha
 {
@@ -10,7 +10,7 @@ class ReCaptcha
 
         $client = new Client();
 
-        $response = $client->post('https://www.google.com/recaptcha/api/siteverify',
+        $response = Http::post('https://www.google.com/recaptcha/api/siteverify',
             ['form_params'=>
                 [
                     'secret'=>env('GOOGLE_RECAPTCHA_SECRET'),
