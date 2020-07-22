@@ -32,4 +32,5 @@
       }
     </style>
     <title>Yavuz Orbey @yield('title')</title> <!--title needs to change for different pages -->
+    @yield('head_scripts')
   </head>

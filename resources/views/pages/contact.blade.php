@@ -30,7 +30,7 @@
                         <input id="subject" name="subject" class="input-control" type="text" placeholder="Subject" autocomplete="off">
                     </div>
                 </div>
-                
+                <div class="g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}"></div>
             </div>
             
            
@@ -42,7 +42,7 @@
                             <textarea id="message" name="message" class="textarea-control" placeholder="Type your message here..."></textarea>
                     </div>
                 </div>
-            <div class="g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}"></div>
+
                 <div class="row">
                     <div class="col-md-3">
                         <input type="submit" class="btn btn-block btn-outline-dark" value="SEND">
@@ -61,6 +61,6 @@
 
 @stop
 
-@section('scripts')
+@section('head_scripts')
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 @stop

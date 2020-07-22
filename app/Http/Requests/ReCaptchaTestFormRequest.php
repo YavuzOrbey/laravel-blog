@@ -23,6 +23,7 @@ class ReCaptchaTestFormRequest extends FormRequest
      */
     public function rules()
     {
+        
         return [
             'email'=> 'bail|required|email',
             'fullname' => 'required',

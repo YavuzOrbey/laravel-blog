@@ -71,6 +71,7 @@ class PagesController extends Controller{
             'message' => 'required|min:10'
         ]); */
         $validated = $request->validated();
+
   /*       $data = [
             'email' => $request->input('email'),
             'name' => $request->input('fullname'),
