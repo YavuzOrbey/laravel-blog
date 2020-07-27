@@ -63,7 +63,7 @@ var commands = [
         cmd: "fontName",
         val: "'Inconsolata', monospace",
         desc:
-            'Changes the font name for the selection or at the insertion point. This requires a font name string ("Arial" for example) to be passed in as a value argument.'
+            "Changes the font name for the selection or at the insertion point. This requires a font name string ('Arial' for example) to be passed in as a value argument."
     },
     {
         cmd: "fontSize",
@@ -82,7 +82,7 @@ var commands = [
         cmd: "formatBlock",
         val: "<blockquote>",
         desc:
-            'Adds an HTML block-style tag around the line containing the current selection, replacing the block element containing the line if one exists (in Firefox, BLOCKQUOTE is the exception - it will wrap any containing block element). Requires a tag-name string to be passed in as a value argument. Virtually all block style tags can be used (eg. "H1", "P", "DL", "BLOCKQUOTE"). (Internet Explorer supports only heading tags H1 - H6, ADDRESS, and PRE, which must also include the tag delimiters &lt; &gt;, such as "&lt;H1&gt;".)'
+            "Adds an HTML block-style tag around the line containing the current selection, replacing the block element containing the line if one exists (in Firefox, BLOCKQUOTE is the exception - it will wrap any containing block element). Requires a tag-name string to be passed in as a value argument. Virtually all block style tags can be used (eg. 'H1', 'P', 'DL', 'BLOCKQUOTE'). (Internet Explorer supports only heading tags H1 - H6, ADDRESS, and PRE, which must also include the tag delimiters &lt; &gt;, such as '&lt;H1&gt;'.)"
     },
     {
         cmd: "forwardDelete",
@@ -94,7 +94,7 @@ var commands = [
         val: "h3",
         icon: "heading",
         desc:
-            'Adds a heading tag around a selection or insertion point line. Requires the tag-name string to be passed in as a value argument (i.e. "H1", "H6"). (Not supported by Internet Explorer and Safari.)'
+            "Adds a heading tag around a selection or insertion point line. Requires the tag-name string to be passed in as a value argument (i.e. 'H1', 'H6'). (Not supported by Internet Explorer and Safari.)"
     },
     {
         cmd: "hiliteColor",
@@ -276,11 +276,12 @@ function doCommand(cmdKey) {
 
 function init() {
     var html = "",
-        template =
-            '<span><span class="btn btn-xs %btnClass%" title="%desc%" onmousedown="event.preventDefault();" onclick="doCommand(\'%cmd%\')"><i class="%iconClass%"></i> %cmd%</code></span>';
+        template = `<div class="btn btn-xs %btnClass%" title="%desc%" onmousedown="event.preventDefault();" onclick="doCommand(\'%cmd%\')">
+        <i class="%iconClass%"></i> %cmd%
+        </div>`;
     commands
         .filter(function(commandToFilter) {
-            if (supported(commandToFilter)) return true;
+            /* if (supported(commandToFilter))  */ return true;
         })
         .map(function(command, i) {
             commandRelation[command.cmd] = command;

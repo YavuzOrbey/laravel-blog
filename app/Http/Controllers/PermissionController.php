@@ -98,7 +98,7 @@ class PermissionController extends Controller
         'description'=>'required|max:190'])->validate();
         
         $permission = Permission::findOrFail($id);
-        $permission->display_name = $request->name;
+        $permission->display_name = $request->display_name;
         $permission->description = $request->description;
         if($permission->save()){
             return redirect()->route('permissions.show', $permission->id);

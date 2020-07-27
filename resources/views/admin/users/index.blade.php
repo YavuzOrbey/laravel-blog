@@ -22,9 +22,9 @@
     <tbody>
         @foreach ($users as $user)
         <tr>
-        <td><a href="{{route('users.show', ['id'=>$user->id])}}">{{$user->username}}</a></td>
+        <td><a href="{{route('users.show', ['user'=>$user->id])}}">{{$user->username}}</a></td>
         <td>{{$user->email}}</td>
-        <td>{{$user->roles->first()->display_name}}</td>
+        <td>@foreach ($user->roles as $role) {{$role->name}}@endforeach</td>
         <td>{{$user->created_at->toFormattedDateString()}}</td>
         <td><a href="{{route('users.edit', ['user'=>$user])}}">Edit</a></td>
     </tr>

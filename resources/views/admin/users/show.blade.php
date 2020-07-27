@@ -3,7 +3,10 @@
 
 @section('content')
 <h1>{{$user->name}}</h1>
-
+<p>One time access token displayed: {{$token}} </p>
+<p>@foreach ($user->tokens as $token) 
+    {{$token }}@endforeach
+</p>
 <table class="table table-bordered table-hover table-sm " >
 <caption>Information about {{$user->name}}</caption>
     <thead  class="thead-light">
@@ -20,6 +23,7 @@
         <td>{{$user->roles->first()->display_name}}</td>
         <td>{{$user->created_at->toFormattedDateString()}}</td>
         <td><a href="{{route('users.edit', ['user'=>$user])}}">Edit</a></td>
+        
     </tr>
     </tbody>
 </table>

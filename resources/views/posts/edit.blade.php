@@ -33,7 +33,7 @@
 
         {{Form::label('body', 'Body:', array('class'=> 'btn-h1-spacing')) }}
         {{Form::hidden('body', null, array('id'=>'hidden-editor', 'required'=>'')) }}
-        <section id="editor" class="textarea form-control" contenteditable style="display:inline-block">{{$post->body }}</section>
+        <section id="editor" class="textarea form-control" contenteditable style="display:inline-block">{!!html_entity_decode($post->body) !!}</section>
     </div>
     <div class="col-md-4">
         <div class="card">

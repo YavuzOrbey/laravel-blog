@@ -41,7 +41,7 @@
 
                 {{Form::label('body', 'Post Body:') }}
                 {{Form::hidden('body', null, array('id'=>'hidden-editor', 'required'=>'')) }}
-                <section id="editor" class="textarea form-control" contenteditable style="display:inline-block">{{old('body')}}</section>
+                <section id="editor" class="textarea form-control" style="display:inline-block" contenteditable >{{old('body')}}</section>
 
                 {{Form::submit('Create', ['id'=>'submit-btn', 'class'=>'btn btn-primary btn-lg btn-block', 'style'=> 'margin-top: 20px']) }}
 

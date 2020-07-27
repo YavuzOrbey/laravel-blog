@@ -23,7 +23,7 @@
         <tr>
         <td>{{$role->display_name}}</td>
         <td>{{$role->description}}</td>
-        <td><a href="{{route('roles.show', ['id'=>$role->id])}}">View</a></td>
+        <td><a href="{{route('roles.show', ['role'=>$role])}}">View</a></td>
         <td><a href="{{route('roles.edit', ['role'=>$role])}}">Edit</a></td>
     </tr>
         @endforeach

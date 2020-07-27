@@ -31,6 +31,6 @@
         overflow: hidden;
       }
     </style>
-    <title>Yavuz Orbey @yield('title')</title> <!--title needs to change for different pages -->
+    <title>Yavuz Orbey @yield('title')</title>
     @yield('head_scripts')
   </head>

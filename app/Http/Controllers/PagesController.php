@@ -31,6 +31,7 @@ class PagesController extends Controller{
         */
         // get the most recent posts from different categories and send them to the welcome page
         $user = User::where('username', 'yavuz')->first();
+        $posts = [];
         $categories = Category::all(); // HERE
         foreach ($categories as $key => $category) {
             $category_posts = Post::where('user_id', $user->id)->where('category_id', $category->id)->get();

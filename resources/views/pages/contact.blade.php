@@ -13,13 +13,13 @@
                 <div class="col-md-4">
                     <div class="input-group">
                     <label for="fullname" >Name:</label>
-                    <input id="fullname" name="fullname" class="input-control" type="text" placeholder="Your name" autocomplete="off">
+                    <input id="fullname" name="fullname" class="input-control" type="text" placeholder="Your name" autocomplete="off" value={{old('fullname')}}>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="input-group">
                         <label for="contact-email" >Email:</label>
-                        <input id="contact-email" name="email" class="input-control" type="email" placeholder="Your email" >
+                        <input id="contact-email" name="email" class="input-control" type="email" placeholder="Your email" value={{old('email')}}>
                     </div>
                 </div>
             </div>
@@ -27,10 +27,10 @@
                 <div class="col-md-8">
                     <div class="input-group">
                         <label for="subject">Subject:</label>
-                        <input id="subject" name="subject" class="input-control" type="text" placeholder="Subject" autocomplete="off">
+                        <input id="subject" name="subject" class="input-control" type="text" placeholder="Subject" autocomplete="off" value={{old('subject')}}>
                     </div>
                 </div>
-                <div class="g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}"></div>
+
             </div>
             
            
@@ -39,10 +39,10 @@
                 <label for="message">Message</label>
                 <div class="row">
                     <div class="col-md-8">
-                            <textarea id="message" name="message" class="textarea-control" placeholder="Type your message here..."></textarea>
+                    <textarea id="message" name="message" class="textarea-control" placeholder="Type your message here...">{{old('message')}}</textarea>
                     </div>
                 </div>
-
+                <div class="g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}"></div>
                 <div class="row">
                     <div class="col-md-3">
                         <input type="submit" class="btn btn-block btn-outline-dark" value="SEND">

@@ -24,7 +24,7 @@
         <tr>
         <td>{{$permission->display_name}}</td>
         <td>{{$permission->description}}</td>
-        <td><a href="{{route('permissions.show', ['id'=>$permission->id])}}">View</a></td>
+        <td><a href="{{route('permissions.show', ['permission'=>$permission])}}">View</a></td>
         <td><a href="{{route('permissions.edit', ['permission'=>$permission])}}">Edit</a></td>
     </tr>
         @endforeach

@@ -70,6 +70,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
+        $token = $user->createToken('api_token');
         $user->roles()->sync(6);
         return $user;
     }

@@ -27,11 +27,13 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('created_at', 'desc')->paginate(10);
+
         return view('admin.users.index', compact('users'));
     }
 
     public function apiIndex(){
         $users = User::all();
+        dd($users);
         return $users;
     }
     /**
@@ -67,6 +69,7 @@ class UserController extends Controller
         }
         $user = new User();
         $user->name = $request->name;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($password);
         
@@ -90,8 +93,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $token = (Session::has('token')) ? Session::get('token')->plainTextToken : "";
+
         $user = User::with('roles')->findOrFail($id);
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.show', compact('user', 'token'));
     }
 
     /**
@@ -129,14 +134,19 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->username = $request->username;
         $user->password = isset($request->auto) ? Hash::make("password"): Hash::make($request->password);
+       /*  
+        //DEPRECATED WITH LARAVEL SANCTUM
         $token = Str::random(60);
         $user->forceFill([
             'api_token' => hash('sha256', $token),
-        ]);
+        ]); */
+        $token = $user->createToken('api_token');
+
+
         if($user->save()){
             $user->roles()->sync($request->role);
             Session::flash('success', 'User successfully updated!');
-            return redirect()->route('users.show', $user->id);
+            return redirect()->route('users.show', $user->id)->with(['token' => $token]); 
         }
         else{
             Session::flash('danger', 'An error occurred');

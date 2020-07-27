@@ -4,7 +4,7 @@
 @section('content')
 {{-- Need to do a few things here. For one need to loop through the posts and see which categories there are in the first place.  --}}
 <div class='row'>
-@foreach ($posts as $key=>$category)
+@foreach ($posts  as $key=>$category)
     <div class="col-xl-6">
         <div class='{{strtolower($key)}} item '>
         <h3 class='blog-title' style="color: @if($loop->index%3==0) {{'white'}} @else {{'black'}} @endif"><span>{{$key}}</span></h3>

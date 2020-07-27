@@ -9,7 +9,7 @@ use App\Comment;
 use App\Category;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 class BlogController extends Controller
 {
     public function __construct(){
@@ -40,7 +40,11 @@ class BlogController extends Controller
                     $recentPosts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->limit(5)->get();
                     $category = Category::where('id', $post->category_id)->first();
                     $users = User::all();
-                    return view('blog.single', compact('post', 'recentPosts', 'category', 'users'));
+                    $token = null;
+                    if(Auth::user())
+                    {$token = Auth::user()->tokens->firstWhere('tokenable_id', Auth::user()->id);
+                    }
+                    return view('blog.single', compact('post', 'recentPosts', 'category', 'users', 'token'));
                 //}
 
                 

@@ -20,7 +20,7 @@ class CommentController extends Controller
     }
     
     // API METHODS
-    public function apiIndex(Post $post){ //this is type hinting in usage
+    public function apiIndex(Post $post){ 
         $comments = $post->comments()->with('user')->latest()->get();
         foreach ($comments as $key => $comment) {
             $comment["user"]['avatar'] = md5( strtolower( trim($comment->user->email)));
@@ -29,6 +29,7 @@ class CommentController extends Controller
     }
 
     public function apiStore(Request $request, Post $post){
+        
         $comment = $post->comments()->create([ 
             'comment_text'=>$request->body,
             'user_id' => Auth::id()
