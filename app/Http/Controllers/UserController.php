@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
-use App\Traits\SaveApiToken;
 use App\User;
 use App\Role;
 
@@ -14,7 +13,7 @@ use Session;
 use Validator;
 class UserController extends Controller
 {
-    use SaveApiToken;
+
     public function __construct(){
         $this->middleware('auth');
         //$this->middleware('role:superadministrator|administrator');
@@ -140,13 +139,13 @@ class UserController extends Controller
         $user->forceFill([
             'api_token' => hash('sha256', $token),
         ]); */
-        $token = $user->createToken('api_token');
+        //$token = $user->createToken('api_token');
 
 
         if($user->save()){
             $user->roles()->sync($request->role);
             Session::flash('success', 'User successfully updated!');
-            return redirect()->route('users.show', $user->id)->with(['token' => $token]); 
+            return redirect()->route('users.show', $user->id);
         }
         else{
             Session::flash('danger', 'An error occurred');
