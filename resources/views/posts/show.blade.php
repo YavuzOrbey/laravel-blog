@@ -63,8 +63,8 @@
                 <tr>
                   <td><span class='ref-name'>{{$comment->comment_text}}</span></td>
                   <td><a href="/{{$comment->user->username}}/blog">{{$comment->user->username}}</a></td>
-                  {!! Form::open(['route'=> ['comments.destroy', $comment], 'method'=>'DELETE'])!!}
-                  <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></td>
+                  {!! Form::open(['route'=> ['comments.destroy', $comment], 'method'=>'DELETE']) !!}
+                  <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i>Delete</button></td>
                   {!! Form::close() !!}
                 </tr>
             @endforeach

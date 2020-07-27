@@ -9,3 +9,4 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /database/factories
+/config/sanctum.php
