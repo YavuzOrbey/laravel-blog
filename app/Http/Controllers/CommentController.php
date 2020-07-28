@@ -10,6 +10,7 @@ use App\Post;
 use App\Comment;
 use Session;
 use App\Events\NewComment;
+use Purifier;
 class CommentController extends Controller
 {
 
@@ -21,9 +22,10 @@ class CommentController extends Controller
     
     // API METHODS
     public function apiIndex(Post $post){ 
-        $comments = $post->comments()->with('user')->latest()->get();
+        $comments = $post->comments()->with('user')->oldest()->get();
         foreach ($comments as $key => $comment) {
             $comment["user"]['avatar'] = md5( strtolower( trim($comment->user->email)));
+            $comment["creation"] = date('m/d/y G:i', strtotime($comment->created_at));
         }
         return response()->json($comments);
     }
@@ -31,7 +33,7 @@ class CommentController extends Controller
     public function apiStore(Request $request, Post $post){
         
         $comment = $post->comments()->create([ 
-            'comment_text'=>$request->body,
+            'comment_text'=>Purifier::clean($request->body),
             'user_id' => Auth::id()
         ]); //there's a save method embedded inside create() method
         $comment = Comment::where('id', $comment->id)->with('user')->first();

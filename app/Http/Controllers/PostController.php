@@ -10,7 +10,7 @@ use App\Post;
 use App\User;
 use App\Tag;
 use App\Category;
-use Purifier;
+
 use Session;
 use Image;
 use Storage; 
@@ -18,7 +18,6 @@ use File;
 class PostController extends Controller
 {
     public function __construct(){
-        // all this does is make sure you're logged in. It doesn't make sure that you own what you're trying to reach
         $this->middleware('auth');
         $this->middleware('role:superadministrator');
     }
@@ -42,13 +41,8 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $tags = Tag::all();
-        //Log::info($categories);
-        /* $categories = $categories->mapWithKeys(function ($category) {
-            return [$category['id']=>$category['name']];
-        }); */
-        $categories = $categories->pluck('name', 'id'); // a better way of doing the same thing as above
+        $categories = $categories->pluck('name', 'id'); 
         $tags = $tags->pluck('name', 'id');
-        //Log::info($categories);
         return view('posts.create', compact('categories', 'tags'));
     }
 
@@ -60,7 +54,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         
         // validate the data
         
@@ -79,18 +72,11 @@ class PostController extends Controller
             $post->title = $request->input('title');
             $post->category_id = $request->input('category');
             $post->slug = $request->input('slug');
-            $post->body = Purifier::clean($request->input('body')); 
-            //save image
+            $post->body = $request->input('body');
+
             if($request->hasFile('image')){
                 
                 $image = $request->image->store('users/' . Auth::id());
-                //$filename = time() . "." . $image->getClientOriginalExtension();
-                //$path = public_path() . 'users/' . Auth::id() . '/images/';
-                /* if(!file_exists($path)){
-                    File::makeDirectory($path);
-                } 
-                        */
-                 //"users/8/XmgrGFyD8Q77yZrxL99eyrleGhutzHE2sZsnNkyi.jpeg"
                 $thumbnail = str_replace(".jpeg", "-width-200.jpeg",$image);
                 $thumbnail = "images/" . $thumbnail;
                 Image::make($request->image)->resize(200, null, function ($constraint) {
@@ -104,8 +90,7 @@ class PostController extends Controller
 
             //attaching tag associations happens after the save (remember the many to many relatioship)
             $post->tags()->sync($request->tags);
-        //redirect to another page
-        //$request->session()->flash('success', 'Post successfully saved');
+
         Session::flash('success', 'Blog successfully saved');
         return redirect()->route('posts.show', $post->id);
     }
@@ -168,7 +153,7 @@ class PostController extends Controller
         ]);
         $post = Post::find($id);
         $post->title = $request->input('title');
-        $post->body = Purifier::clean($request->input('body'));
+        $post->body = $request->input('body');
         $post->category_id = $request->input('category');
         $post->slug = $request->input('slug');
 

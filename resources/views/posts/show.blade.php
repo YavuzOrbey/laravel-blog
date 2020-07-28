@@ -84,7 +84,13 @@
   var myTr = document.createElement("tr");
   myTr.setAttribute("v-for", "comment in comments");
   myTr.innerHTML = `<td><span class='ref-name'>@{{comment.comment_text}}</span></td>
-                <td><a v-bind:href="'/'+comment.user.username + '/blog'">@{{comment.user.username}}</a></td>`;
+                <td><a v-bind:href="'/'+comment.user.username + '/blog'">@{{comment.user.username}}</a></td>
+                <td>
+                    <form method="post" v-bind:action="'/comments/'+comment.id"> 
+                        @csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit">delete</button></form>
+                    </td>`;
   tr.parentNode.replaceChild(myTr, tr);
       const app = new Vue({
           el: '#app',
@@ -108,7 +114,7 @@
                        }
                   );
               },
-              postComment() {
+/*               postComment() {
                   axios.post('/api/posts/'+this.post.id+'/comment', {
                       api_token: this.user.api_token,
                       body: this.commentBox
@@ -120,7 +126,7 @@
                   .catch((error) => {
                       console.log(error);
                   })
-              }
+              } */
           }
       })
 </script>

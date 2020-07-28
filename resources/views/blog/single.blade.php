@@ -15,9 +15,7 @@
             </div>
         </div>
         <div class="blog-post">
-           
-           
-                {!! $post->body !!}</p>
+        <p>{!! html_entity_decode($post->body) !!}</p>
         @if ($post->image)
         <img src="{{asset('images/' . $post->image . ".jpeg")}}">
         @endif
@@ -53,19 +51,19 @@
          },
         mounted(){
             axios.get('/sanctum/csrf-cookie').then(response => {
-            axios.post('/login ').then(res=>{
-                this.getComments();
-                this.listen();
-            }) 
-            
+                axios.post('/login ').then(res=>{
 
-            
-});
+                }) 
+            }).then(next=>{
+                this.getComments();
+                    this.listen();
+            });
          },
         methods: {
             getComments() {
                 axios.get('/api/posts/'+this.post.id+'/comments')
                     .then((response) => {
+                        console.log(response.data);
                         this.comments = response.data;
                     })
                     .catch(function (error) {
@@ -78,7 +76,7 @@
                         body: this.commentBox
                 })
                 .then((response) => {
-                    this.comments.unshift(response.data);
+                    this.comments.push(response.data);
                     this.commentBox = '';
                 })
                 .catch((error) => {
@@ -95,7 +93,7 @@
         </div>
         <div class="col-sm-7 username"><a v-bind:href="'/'+comment.user.username + '/blog'">@{{comment.user.username}}</a></div>
         <div class="col-sm-4 date-time-display">
-            <span>Posted on  @{{comment.created_at}} 
+            <span>Posted on  @{{comment.creation}} 
                 <template v-if="comment.created_at !== comment.updated_at">
                     Edited on: @{{comment.updated_at}}</template>
             </span>
@@ -103,12 +101,12 @@
     </div>
     <div class="row mt-4">
         <div v-bind:class="[comment.user.username===$root.user ? 'col-sm-10' : 'col-sm-12', 'comment-text']">
-                @{{comment.comment_text}}
+               @{{comment.comment_text}}
         </div>
     </div></li><div class="row mt-2">
         <div class="col-md-12" v-if="$root.user">
             <textarea class='form-control' name="body" v-model="commentBox" ></textarea>
-            <button @click.prevent="postComment" >Submit</button>
+            <button class='btn btn-outline-primary' @click.prevent="postComment" >Submit</button>
         </div>
         <div class="col-md-12" v-else>
             <span>Only logged in users can comment on or like posts. Login to comment on this post!</span>
