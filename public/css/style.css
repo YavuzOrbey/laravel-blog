@@ -1,15 +1,9 @@
 * {
     margin: 0;
     padding: 0;
-    z-index: 0;
 }
-nav {
+/* nav {
     font-family: "Open Sans", Arial, sans-serif;
-    /* background: linear-gradient(
-        to right,
-        rgba(192, 213, 142, 1),
-        rgba(177, 118, 155, 1)
-    ); */
     background: #252525;
     color: white;
     height: 56px;
@@ -20,10 +14,10 @@ nav {
 .navbar-light .navbar-nav .active .nav-link,
 .navbar-light .navbar-brand {
     color: white;
-}
+} */
 body {
     font-family: "Roboto", sans-serif;
-    background-color: #fff;
+    background-color: #f9f9f9;
     /* background: #e2d1c3; */
     /*     background: linear-gradient(
             90deg,

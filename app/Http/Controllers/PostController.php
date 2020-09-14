@@ -19,7 +19,7 @@ class PostController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('role:superadministrator');
+        $this->middleware('role:superadministrator'); 
     }
     /**
      * Display a listing of the resource.
@@ -28,6 +28,7 @@ class PostController extends Controller
      */
     public function index()
     {
+
         $posts = Post::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(10);
         return view('posts.index', compact('posts'));
     }
