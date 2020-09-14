@@ -127,21 +127,12 @@ class UserController extends Controller
         'email' =>Rule::unique('users')->ignore($id), 
         'username' => ['required', 'max:190', Rule::unique('users', 'username')->ignore($id)],
         'password'=>Rule::requiredIf(!isset($request->auto))])->validate();
-        //$validatedData = $request->validate(['name'=>'required|max:190', 'email' => ['required', 'email', Rule::unique('users')->ignore($id)], 'password'=>'required']);
+        
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->username = $request->username;
         $user->password = isset($request->auto) ? Hash::make("password"): Hash::make($request->password);
-       /*  
-        //DEPRECATED WITH LARAVEL SANCTUM
-        $token = Str::random(60);
-        $user->forceFill([
-            'api_token' => hash('sha256', $token),
-        ]); */
-        //$token = $user->createToken('api_token');
-
-
         if($user->save()){
             $user->roles()->sync($request->role);
             Session::flash('success', 'User successfully updated!');
