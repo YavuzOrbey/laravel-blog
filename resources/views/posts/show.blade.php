@@ -1,6 +1,6 @@
 @extends('main')
 @section('stylesheets')
-{{Html::style('css/parsley.css') }}
+<link rel="stylesheet" href="{{ asset('css/parsley.css') }}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 @endsection
 @section('content')
@@ -29,14 +29,21 @@
                     <dd>{{ date('M j, Y g:i A', strtotime($post->updated_at)) }}</dd>
                 </dl>
                 <hr>
-                {!! Form::open(['route'=> ['posts.destroy', $post->id], 'method'=>'DELETE'])!!}
-                <div class="row">
-                    <div class="col-sm-6">{!! Html::linkRoute('posts.edit', 'Edit', array($post->id), array('class'=>'btn btn-primary btn-block')) !!}</div>
-                    <div class="col-sm-6">{{Form::submit('Delete', array('class'=>'btn btn-danger btn-block')) }}</div>
-                </div>
-                {!! Form::close() !!}
-                {!! Html::linkRoute('posts.index', '<< See all posts', null, array('class'=>'btn btn-outline-dark btn-h1-spacing')) !!}
-            </div>
+                <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+    @csrf
+    @method('DELETE')
+    <div class="row">
+        <div class="col-sm-6">
+            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary btn-block">Edit</a>
+        </div>
+        <div class="col-sm-6">
+            <button type="submit" class="btn btn-danger btn-block">Delete</button>
+        </div>
+    </div>
+</form>
+
+<a href="{{ route('posts.index') }}" class="btn btn-outline-dark btn-h1-spacing"><< See all posts</a>
+</div>
         </div>
     </div>
 </div>
@@ -63,9 +70,12 @@
                 <tr>
                   <td><span class='ref-name'>{{$comment->comment_text}}</span></td>
                   <td><a href="/{{$comment->user->username}}/blog">{{$comment->user->username}}</a></td>
-                  {!! Form::open(['route'=> ['comments.destroy', $comment], 'method'=>'DELETE']) !!}
-                  <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i>Delete</button></td>
-                  {!! Form::close() !!}
+                  <form action="{{ route('comments.destroy', $comment) }}" method="POST">
+    @csrf
+    @method('DELETE')
+    <td><button class="btn btn-danger"><i class="fas fa-trash-alt"></i>Delete</button></td>
+</form>
+
                 </tr>
             @endforeach
           </noscript>
@@ -77,7 +87,7 @@
 @section('title', '| Created Post')
 
 @section('scripts')
-{{Html::script('js/parsley.min.js') }}
+<script src="{{ asset('js/parsley.min.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
   var tr = document.getElementById('tr');

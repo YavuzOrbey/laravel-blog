@@ -24,15 +24,27 @@
       @foreach ($categories as $key=>$category)
             <tr>
               <td><span class='ref-name'><a href="{{route('categories.show', $category)}}">{{$category->name}}</a></span>
-              {!! Form::open(['route'=> ['categories.update', $category->id], 'method'=>'PUT','class'=>'edit-form'])!!}
-              {{Form::text('name', $category->name, [ 'placeholder'=>'Enter a Category Name', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
-              {{Form::submit('Save', ['class'=>'btn btn-primary btn-xs ']) }}
-              {!! Form::close() !!}</td>
+              <form action="{{ route('categories.update', $category->id) }}" method="POST" class="edit-form">
+    @csrf
+    @method('PUT')
+
+    <div class="form-group">
+        <input type="text" name="name" value="{{ old('name', $category->name) }}" 
+               placeholder="Enter a Category Name" required minlength="3" maxlength="190" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-xs">Save</button>
+</form>
+</td>
               <td><a href="{{route('categories.edit', $category->id)}}"><button class="btn btn-success edit"><i class="fas fa-edit"></i></button></a></td>
 
-              {!! Form::open(['route'=> ['categories.destroy', $category->id], 'method'=>'DELETE'])!!}
-              <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></td>
-              {!! Form::close() !!}
+              <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+    @csrf
+    @method('DELETE')
+
+    <td><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></td>
+</form>
+
             </tr>
       @endforeach
 
@@ -40,12 +52,17 @@
       </table>
     </div>
     <div class="col-md-4">
-            {!! Form::open(['route' => 'categories.store', 'data-parsley-validate'=>'']) !!}
-            {{Form::label('name', 'Name:') }}
-            {{Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Enter a Category Name', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
+    <form action="{{ route('categories.store') }}" method="POST" data-parsley-validate>
+    @csrf
 
-            {{Form::submit('Create', ['class'=>'btn btn-primary btn-lg btn-block', 'style'=> 'margin-top: 20px']) }}
-{!! Form::close() !!}
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" name="name" class="form-control" placeholder="Enter a Category Name" required minlength="3" maxlength="190">
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top: 20px">Create</button>
+</form>
+
     </div>
 </div>
     

@@ -1,6 +1,6 @@
 @extends('main')
 @section('stylesheets')
-{{Html::style('css/parsley.css') }}
+<link rel="stylesheet" href="{{ asset('css/parsley.css') }}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <!-- Select2 CDN -->
@@ -23,29 +23,40 @@
 
                 
             @endif
-            {!! Form::open(['route' => 'posts.store', 'data-parsley-validate'=>'', 'onSubmit'=> 'return sendForm()', 'files'=> true]) !!}
-                {{Form::label('title', 'Title:') }}
-                {{Form::text('title', null, ['class'=>'form-control', 'placeholder'=>'Enter a Title', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
+            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" data-parsley-validate onsubmit="return sendForm()">
+    @csrf
+    
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title" class="form-control" placeholder="Enter a Title" required minlength="3" maxlength="190" value="{{ old('title') }}">
+    
+    <label for="category">Category:</label>
+    <select name="category" id="category" class="form-control" required>
+        <option value="" disabled>Select a Category</option>
+        @foreach($categories as $key => $category)
+            <option value="{{ $key }}">{{ $category }}</option>
+        @endforeach
+    </select>
 
-                {{Form::label('category', 'Category:') }}
-                {{Form::select('category', $categories, null, ['class'=>'form-control', 'placeholder'=>'Enter a Category', 'required'=>''])}}
+    <label for="tags">Tags:</label>
+    <select name="tags[]" id="tags" class="form-control js-example-basic-multiple" multiple="multiple">
+        @foreach($tags as $key => $tag)
+            <option value="{{ $key }}">{{ $tag }}</option>
+        @endforeach
+    </select>
 
-                {{Form::label('tags', 'Tags:') }}
-                {{Form::select('tags[]', $tags, null, ['class'=>'form-control js-example-basic-multiple', 'multiple'=>'multiple'] ) }}
+    <label for="slug">Url:</label>
+    <input type="text" name="slug" id="slug" class="form-control" placeholder="Enter a Slug URL" required minlength="5" maxlength="190" value="{{ old('slug') }}">
 
-                {{Form::label('slug', 'Url:') }}
-                {{Form::text('slug', null, ['class'=>'form-control', 'placeholder'=>'Enter a Slug URL', 'required'=>'', 'minlength'=>5, 'maxlength'=>190] ) }}
+    <label for="image">Image:</label>
+    <input type="file" name="image" id="image">
 
-                {{Form::label('image', 'Image:') }}
-                {{Form::file('image') }}
+    <label for="body">Post Body:</label>
+    <textarea name="body" id="hidden-editor" class="form-control" required style="display: none;"></textarea>
+    <section id="editor" class="textarea form-control" contenteditable style="display: inline-block">{{ old('body') }}</section>
 
-                {{Form::label('body', 'Post Body:') }}
-                {{Form::hidden('body', null, array('id'=>'hidden-editor', 'required'=>'')) }}
-                <section id="editor" class="textarea form-control" style="display:inline-block" contenteditable >{{old('body')}}</section>
+    <button type="submit" id="submit-btn" class="btn btn-primary btn-lg btn-block" style="margin-top: 20px;">Create</button>
+</form>
 
-                {{Form::submit('Create', ['id'=>'submit-btn', 'class'=>'btn btn-primary btn-lg btn-block', 'style'=> 'margin-top: 20px']) }}
-
-            {!! Form::close() !!}
         </div>
         <div class="col-md-12">
             <div class="buttons"></div>
@@ -56,8 +67,9 @@
 @section('title', '| Create Post')
 
 @section('scripts')
-{{Html::script('js/wysiwyg.js') }}
-{{Html::script('js/parsley.min.js') }}
+<script src="{{ asset('js/wysiwyg.js') }}"></script>
+<script src="{{ asset('js/parsley.min.js') }}"></script>
+
 <!-- Select2 CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>$(document).ready(function() {

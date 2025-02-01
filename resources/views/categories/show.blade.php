@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('stylesheets')
-{{Html::style('css/parsley.css') }}
+<link rel="stylesheet" href="{{ asset('css/parsley.css') }}">
 @endsection
 
 @section('content')

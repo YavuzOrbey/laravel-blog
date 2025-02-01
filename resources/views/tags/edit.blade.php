@@ -3,10 +3,13 @@
 @section('title', " | Edit $tag->name")
 
 @section('content')
-{!! Form::open(['route'=>['tags.update', $tag],  'method'=>'PUT', 'data-parsley-validate'=>''])!!}
-{{Form::label('name', 'Tag Name')}}
-{{ Form::text('name', $tag->name, ['class'=>'form-control'])}}
-{{ Form::submit('Save', ['class'=>'btn btn-primary'])}}
-{!! Form::close() !!}
+<form action="{{ route('tags.update', $tag) }}" method="POST" data-parsley-validate="">
+    @csrf
+    @method('PUT')
+    <label for="name">Tag Name</label>
+    <input type="text" name="name" id="name" class="form-control" value="{{ $tag->name }}" />
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
 @stop
+
 

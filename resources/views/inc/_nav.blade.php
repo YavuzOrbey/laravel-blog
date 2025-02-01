@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand nav-link" href="/">{{ config('app.name') }}</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,7 +13,7 @@
 
 
       <li class="nav-item {{ Request::is('blog') ? 'active': '' }}">
-      <a class="nav-link" href="/blog">Blog</a>
+      <a class="nav-link" href="/blog/{{ Auth::user()? Auth::user()->username: '' }}">Blog</a>
       </li>
 
       <li class="nav-item {{ Request::is('about') ? 'active': '' }}">
@@ -38,7 +39,7 @@
         
         <div class="dropdown-menu w-auto @if ($errors->has('email')) show @endif" aria-labelledby="navbarDropdown">
                           
-          <form class="px-4 py-3" method="POST" action="{{ route('login') }}">
+        <form class="px-4 py-3" method="POST" action="{{route('login')}}">
             @csrf
             <div class="form-group">
               <label for="email">{{ __('Email Address') }}</label>

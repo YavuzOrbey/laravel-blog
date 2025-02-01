@@ -22,29 +22,42 @@
       @foreach ($tags as $key=>$tag)
       <tr>
         
-        <td><span class='ref-name'><a href="{{route('tags.show', $tag)}}">{{$tag->name}}</a></span>
-          {!! Form::open(['route'=> ['tags.update', $tag], 'method'=>'PUT', 'class'=>'edit-form'])!!}
-          {{Form::text('name', $tag->name, [ 'placeholder'=>'Enter a Tag Name', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
-          {{Form::submit('Save', ['class'=>'btn btn-primary btn-xs ']) }}
-          {!! Form::close() !!}</td>
+      <td><span class='ref-name'><a href="{{ route('tags.show', $tag) }}">{{ $tag->name }}</a></span>
+    <form action="{{ route('tags.update', $tag) }}" method="POST" class="edit-form">
+        @csrf
+        @method('PUT')
+        <input type="text" name="name" value="{{ $tag->name }}" placeholder="Enter a Tag Name" required minlength="3" maxlength="190" class="form-control">
+        <button type="submit" class="btn btn-primary btn-xs">Save</button>
+    </form>
+</td>
+
         
       <td><a href="{{route('tags.edit', $tag)}}"><button class="btn btn-success edit"><i class="fas fa-edit"></i></button></a></td>
       
-        {!! Form::open(['route'=> ['tags.destroy', $tag], 'method'=>'DELETE'])!!}
-        <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></td>
-        {!! Form::close() !!}
+      <form action="{{ route('tags.destroy', $tag) }}" method="POST">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-danger">
+        <i class="fas fa-trash-alt"></i>
+    </button>
+</form>
+
       </tr>
       @endforeach
       </tbody>
     </table>
   </div>
     <div class="col-md-4">
-            {!! Form::open(['route' => 'tags.store', 'data-parsley-validate'=>'']) !!}
-            {{Form::label('name', 'Name:') }}
-            {{Form::text('name', null, ['class'=>'form-control', 'placeholder'=>'Enter a Tag Name', 'required'=>'', 'minlength'=>3, 'maxlength'=>190] ) }}
+    <form action="{{ route('tags.store') }}" method="POST" data-parsley-validate>
+    @csrf
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" name="name" class="form-control" placeholder="Enter a Tag Name" required minlength="3" maxlength="190">
+    </div>
 
-            {{Form::submit('Create', ['class'=>'btn btn-primary btn-lg btn-block', 'style'=> 'margin-top: 20px']) }}
-{!! Form::close() !!}
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top: 20px;">Create</button>
+</form>
+
     </div>
 </div>
     

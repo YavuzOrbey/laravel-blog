@@ -9,31 +9,18 @@
             @csrf
             Undergoing Maintenance 
 
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="input-group">
+            <div class="form-group">
                     <label for="fullname" >Name:</label>
                     <input id="fullname" name="fullname" class="input-control" type="text" placeholder="Your name" autocomplete="off" value={{old('fullname')}}>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group">
+            </div>
+            <div class="form-group">
                         <label for="contact-email" >Email:</label>
                         <input id="contact-email" name="email" class="input-control" type="email" placeholder="Your email" value={{old('email')}}>
-                    </div>
-                </div>
             </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="input-group">
+            <div class="form-group">
                         <label for="subject">Subject:</label>
                         <input id="subject" name="subject" class="input-control" type="text" placeholder="Subject" autocomplete="off" value={{old('subject')}}>
-                    </div>
-                </div>
-
             </div>
-            
-           
             
             <div class="form-group">
                 <label for="message">Message</label>

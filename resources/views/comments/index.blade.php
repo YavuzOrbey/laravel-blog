@@ -24,17 +24,31 @@
         <tbody>
             @foreach ($comments as $key=>$comment)
             <tr>
-                <td><span class='ref-name'>{{$comment->comment_text}}</span>
-                    {!! Form::open(['route'=> ['comments.update', $comment], 'method'=>'PUT','class'=>'edit-form'])!!}
-                    {{Form::textarea('comment', $comment->comment_text, [ 'placeholder'=>'Enter a comment', 'required'=>'', 'minlength'=>3, 'maxlength'=>190, 'cols'=>0, 'rows'=>0] ) }}
-                    {{Form::submit('Save', ['class'=>'btn btn-primary btn-xs ']) }}
-                    {!! Form::close() !!}</td>
+            <td>
+    <span class="ref-name">{{ $comment->comment_text }}</span>
+
+    <form action="{{ route('comments.update', $comment) }}" method="POST" class="edit-form">
+        @csrf
+        @method('PUT')
+
+        <textarea name="comment" placeholder="Enter a comment" required minlength="3" maxlength="190" cols="0" rows="0" class="form-control">{{ $comment->comment_text }}</textarea>
+
+        <button type="submit" class="btn btn-primary btn-xs">Save</button>
+    </form>
+</td>
+
                     
                 <td><a href="/{{$comment->post->user->username}}/blog/{{$comment->post->slug}}">{{$comment->post->slug}}</a></td>
                 <td><a href="{{route('comments.edit', $comment)}}"><button class="btn btn-success edit"><i class="fas fa-edit"></i></button></a></td>
-                {!! Form::open(['route'=> ['comments.destroy', $comment], 'method'=>'DELETE'])!!}
-                <td><button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button></td>
-                {!! Form::close() !!}
+                <form action="{{ route('comments.destroy', $comment) }}" method="POST">
+    @csrf
+    @method('DELETE')
+
+    <button type="submit" class="btn btn-danger">
+        <i class="fas fa-trash-alt"></i>
+    </button>
+</form>
+
             </tr>
             @endforeach
 

@@ -50,3 +50,6 @@ Route::get('logout', 'Auth\LoginController@logout', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/likes', 'LikeController@store');
 Route::delete('/likes', 'LikeController@delete');
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/portfolio', 'PagesController@portfolio')->name('portfolio');

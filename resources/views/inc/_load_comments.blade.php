@@ -23,9 +23,12 @@
                 </div>
                 @if(Auth::user() == $comment->user)
                 <div class="col-sm-2">
-                    {!! Form::open(['route'=> ['comments.destroy', $comment], 'method'=>'DELETE']) !!}
-                    {{Form::submit('Delete', array('class'=>'btn btn-danger btn-block')) }}
-                    {!! Form::close() !!}
+                <form action="{{ route('comments.destroy', $comment) }}" method="POST">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-danger btn-block">Delete</button>
+</form>
+
                 </div>
                 
                 @endif

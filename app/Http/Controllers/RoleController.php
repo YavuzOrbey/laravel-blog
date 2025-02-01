@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Role;
-use App\Permission;
+use Laratrust\Models\Role;
+use App\Models\Permission;
 use Validator;
 use Session;
 class RoleController extends Controller

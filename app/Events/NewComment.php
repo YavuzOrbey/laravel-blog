@@ -11,7 +11,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-use App\Comment;
+use App\Models\Comment;
 class NewComment implements ShouldBroadcastNow //change this later
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;

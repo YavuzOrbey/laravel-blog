@@ -39,12 +39,17 @@ return [
             'channels' => ['daily'],
         ],
 
-        'single' => [
+        /* 'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
-        ],
-
+        ], */
+'single' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/laravel.log'),
+        'level' => 'debug',
+        'tap' => [App\Logging\CustomizeFormatter::class],
+    ],
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

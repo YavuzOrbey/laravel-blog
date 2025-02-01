@@ -12,7 +12,8 @@
         <hr>
         <p class="text-center">Yavuz Orbey - Copyright {{ date('Y')}}</p>
       </div>
-      {{-- <user-chat v-if="chat"></user-chat> --}}
+      <div id='open-chat'>Live Chat</div>
+      <user-chat v-if="chat"></user-chat>
     </div>
 
 @include('inc._foot')

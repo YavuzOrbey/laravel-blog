@@ -11,7 +11,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use App\PrivateMessage;
-class NewPrivateMessage implements ShouldBroadcastNow
+class NewPrivateMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $privateMessage;
@@ -40,7 +40,7 @@ class NewPrivateMessage implements ShouldBroadcastNow
             $first  = $this->privateMessage->user_to->id;
             $second = $this->privateMessage->user_from->id;
           }
-        return [new Channel("private_message_" . $first . "_" . $second)];
+        return new PrivateChannel("message-" . $first . "-" . $second);
     }
     public function broadcastAs()
   {

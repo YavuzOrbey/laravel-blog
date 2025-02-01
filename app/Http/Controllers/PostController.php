@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
-use App\Post;
-use App\User;
-use App\Tag;
-use App\Category;
+use App\Models\Post;
+use App\Models\User;
+use App\Models\Tag;
+use App\Models\Category;
 
 use Session;
 use Image;
@@ -19,7 +19,7 @@ class PostController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('role:superadministrator'); 
+       // $this->middleware('role:superadministrator'); 
     }
     /**
      * Display a listing of the resource.
@@ -196,7 +196,7 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
     public function comments()
     {

@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/messages/{user_to}', 'PrivateMessageController@store');
     Route::post('/posts/{post}/comment', 'CommentController@apiStore');
     Route::get('/users', 'UserController@apiIndex');
+    Route::get('/users/admin', 'UserController@getAdmin');
 });

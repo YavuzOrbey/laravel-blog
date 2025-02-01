@@ -1,11 +1,13 @@
 @extends('main')
+
 @section('stylesheets')
-{{Html::style('css/parsley.css') }}
+<link rel="stylesheet" href="{{ asset('css/parsley.css') }}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/vs2015.min.css">
-{{Html::style('css/blog.css')}}
+      <link rel="stylesheet" href="{{ asset('css/blog.css') }}">
 @endsection
+
 @section('content')
 <div class="row mt-2">
     <div class="col-md-12">
@@ -33,16 +35,15 @@
     </div>
 </div>
 @include('inc/_load_comments')
-
 @endsection
 
 @section('sidebar')
 @if(isset($recentPosts))
     <ul class='sidebar-posts'>
         <span>Recent Posts</span>
-        @foreach($recentPosts as $post)
+        @foreach($recentPosts as $recentPost)
         <hr>
-        <li class='recent-post'><a href="{{route('blog.single', ['username'=>$post->user->username, 'slug'=>$post->slug])}}">{{$post->title}}</a></li>
+        <li class='recent-post'><a href="{{route('blog.single', ['username'=>$recentPost->user->username, 'slug'=>$recentPost->slug])}}">{{$recentPost->title}}</a></li>
 
         @endforeach
     </ul>
@@ -50,10 +51,8 @@
 @stop
 @section('title', '| ' . htmlspecialchars($post->title))
 
+
 @section('scripts')
-
-
-{{Html::script('js/parsley.min.js') }}
 <script>
     Vue.component('comment-app', {
         data: function(){
@@ -65,19 +64,19 @@
          },
         mounted(){
             axios.get('/sanctum/csrf-cookie').then(response => {
-                axios.post('/login ').then(res=>{
-
-                }) 
-            }).then(next=>{
+                axios.post('/login').then(res=>{
+                })
+                .catch(error=>console.log(error))
+            })
+            .then(next=>{
                 this.getComments();
-                    this.listen();
+                this.listen();
             });
          },
         methods: {
             getComments() {
                 axios.get('/api/posts/'+this.post.id+'/comments')
                     .then((response) => {
-                        console.log(response.data);
                         this.comments = response.data;
                     })
                     .catch(function (error) {
@@ -86,6 +85,7 @@
                 );
             },
             postComment() {
+                console.log("posting comment")
                 axios.post('/api/posts/'+this.post.id+'/comment', {
                         body: this.commentBox
                 })
@@ -170,6 +170,7 @@
 
 
 </script>
+<script src="{{ asset('js/parsley.min.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 @endsection

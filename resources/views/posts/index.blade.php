@@ -5,24 +5,26 @@
     <h1>All Posts</h1>
   </div>
   <div class="col-md-2">
-      {!! Html::linkRoute('posts.create', 'Create New Post', null, array('class'=>'btn .btn-h1-spacing btn-sm btn-success')) !!}
+  <a href="{{ route('posts.create') }}" class="btn btn-h1-spacing btn-sm btn-success">Create New Post</a>
   </div>
 </div>
 
-    @foreach ($posts as $key=>$post)
+@foreach ($posts as $key => $post)
     <div class="row">
         <div class="col-md-3">
-          <h5>{{$key+1}}. {{$post->title}}</h5>
-          {{date('M j, Y g:i A', strtotime($post->created_at))}}
+          <h5>{{ $key+1 }}. {{ $post->title }}</h5>
+          {{ date('M j, Y g:i A', strtotime($post->created_at)) }}
         </div>
-        <div class='col-md-9'>
-          <p>{{substr(strip_tags($post->body), 0, 200) }}{{ strlen(strip_tags($post->body)) > 200 ? "...": ""}} {!! Html::linkRoute('posts.show', 'View', array($post->id), array('class'=>'btn btn-outline-secondary btn-sm')) !!}
-          <a href="{{ route('posts.edit', $post->id)}}" class="btn btn-outline-secondary btn-sm">Edit</a></p>
-
+        <div class="col-md-9">
+          <p>{{ substr(strip_tags($post->body), 0, 200) }}{{ strlen(strip_tags($post->body)) > 200 ? "..." : "" }} 
+            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-outline-secondary btn-sm">View</a>
+            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
+          </p>
         </div>
     </div>
     <hr>
-    @endforeach
+@endforeach
+
     <div class="text-center">{!! $posts->links() !!}</div>
 @stop
 

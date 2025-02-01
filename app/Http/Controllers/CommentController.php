@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use App\Post;
-use App\Comment;
+use App\Models\User;
+use App\Models\Post;
+use App\Models\Comment;
 use Session;
 use App\Events\NewComment;
 use Purifier;
@@ -31,13 +31,13 @@ class CommentController extends Controller
     }
 
     public function apiStore(Request $request, Post $post){
-        
+        Log::info("posting comment backend");
+
         $comment = $post->comments()->create([ 
             'comment_text'=>Purifier::clean($request->body),
             'user_id' => Auth::id()
         ]); //there's a save method embedded inside create() method
         $comment = Comment::where('id', $comment->id)->with('user')->first();
-        //event(new NewComment($comment));
         broadcast(new NewComment($comment))->toOthers(); // this is the better way to do it
         return $comment->toJson();
     }
@@ -73,7 +73,7 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Comment  $comment
+     * @param  \use App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function edit(Comment $comment)
@@ -85,7 +85,7 @@ class CommentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
+     * @param  \use App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Comment $comment)
@@ -103,7 +103,7 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Comment  $comment
+     * @param  \use App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Comment $comment)

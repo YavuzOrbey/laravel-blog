@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
-use App\User;
-use App\Role;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Laratrust\Models\Role;
 
 use Hash;
 use Session;
@@ -16,7 +17,6 @@ class UserController extends Controller
 
     public function __construct(){
         $this->middleware('auth');
-        //$this->middleware('role:superadministrator|administrator');
     }
     /**
      * Display a listing of the resource.
@@ -31,9 +31,12 @@ class UserController extends Controller
     }
 
     public function apiIndex(){
-        $users = User::all();
-        dd($users);
-        return $users;
+        $currentUser = Auth::user();
+        $admin = User::whereRoleIs('superadministrator')->where('username', 'yavuz')->first();
+        if($currentUser == $admin){
+            return User::all();
+        }
+        return $admin;
     }
     /**
      * Show the form for creating a new resource.

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Like;
-use App\Comment;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller

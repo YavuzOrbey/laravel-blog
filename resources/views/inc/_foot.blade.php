@@ -1,46 +1,110 @@
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    
-
-   {{--  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> --}}
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')
     <script>
-      
+    const app = new Vue({
+        el: '#app',
+        data:  {
+          user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
+          notifications: 0,
+          chat: false,
+        },
+        mounted(){
+          this.run();
+        },
+        methods:{
+          run(){
+            let openChat = document.getElementById('open-chat');
+            openChat.addEventListener('click', ()=>{
+              this.chat=true
+            })
+            if(this.user){
+              this.listen();
+            }
+          },
+
+          listen(){
+            Echo.channel(`comments_${this.user.id}`).listen('NewComment', (comment)=> {
+              this.notifications++;} )
+          },
+          
+
+        }
+      });
+
     Vue.component('user-chat', {
       data: function(){
         return {
-          users: null,
+          users: [],
           selected: null,
           messages: {},
           minimized: true
         }
       },
       mounted(){
+        this.startDraggable();
         this.getUsers();
       },
       methods: {
         getUsers(){
-          axios.get(`/api/users`, {
-              headers: {
-              Authorization: 'Bearer ' + this.$parent.user.api_token //the token is a variable which holds the token
-              }
-          })
+          axios.get(`/api/users`)
           .then((response) => {
-            this.users = response.data;
+            this.users = this.users.concat(response.data);
           })
           .catch(function (error) {
             console.log(error);
           });
         },
+        startDraggable(){
+            if(document.getElementById("chat")) dragElement(document.getElementById("chat"));
+            
+            function dragElement(elmnt) {
+              var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+              if (document.getElementById(elmnt.id + "-navigation")) {
+                
+                // if present, the header is where you move the DIV from:
+                document.getElementById(elmnt.id + "-navigation").onmousedown = dragMouseDown;
+              }
+              
+              function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+              // get the mouse cursor position at startup:
+              pos3 = e.clientX;
+              pos4 = e.clientY;
+              document.onmouseup = closeDragElement;
+              // call a function whenever the cursor moves:
+              document.onmousemove = elementDrag;
+              }
+  
+              function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // calculate the new cursor position:
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                // set the element's new position:
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+              }
+  
+              function closeDragElement() {
+                // stop moving when mouse button is released:
+                document.onmouseup = null;
+                document.onmousemove = null;
+              }
+            }
+          },
+        closeChat(){
+          document.getElementById('chat').style.display = 'none'
+        }
       },
   template: `<div id="chat" >
     <div id='chat-navigation'>
       <div id='chat-minimize' class='chat-btn'>_</div>
-      <div id='chat-close' class='chat-btn'>X</div>
+      <div id='chat-close' class='chat-btn' v-on:click="closeChat">X</div>
     </div>
     <div class='chat-main'>
       <div id='left-chat-main'>
@@ -60,29 +124,7 @@
 });
 
 
-      const app = new Vue({
-        el: '#app',
-        data:  {
-          user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
-          notifications: 0,
-          chat: false,
-        },
-        mounted(){
-          this.run();
-        },
-        methods:{
-          run(){
-            if(this.user){
-              this.chat = true;
-              this.listen();
-            }
-          },
-          listen(){
-            Echo.channel(`comments_${this.user.id}`).listen('NewComment', (comment)=> {this.notifications++;} )
-          }
 
-        }
-      });
 
 
     
@@ -90,11 +132,12 @@
 Vue.component('user-select', {
   props: ['users'],
   template: `<select id="user-select" v-model="selected"  v-on:change="run" >
+    <option disabled selected value=0>Choose User</option>
       <option v-for="user in users" v-bind:value="user.id">@{{user.username}}</option>
     </select>`,
   data: function(){
     return {
-      selected: null,
+      selected: 0,
     }
   },  methods: {
     run(){
@@ -111,8 +154,12 @@ Vue.component('user-select', {
         first = this.selected; 
         second=this.$root.user.id;
       }
-      Echo.channel(`private_message_${parseInt(first)}_${parseInt(second)}`).listen('.NewPrivateMessage', 
-      (newMessage)=> this.$parent.messages.push(newMessage) );
+      console.log(`The channel Echo is listening on is: private-message_${parseInt(first)}-${parseInt(second)}`);
+      Echo.private(`message-${parseInt(first)}-${parseInt(second)}`).listen('.NewPrivateMessage', 
+      (newMessage)=> {
+        console.log('echo received something back from pusher');
+        this.$parent.messages.push(newMessage);
+      });
     }
   }
 });
@@ -124,11 +171,7 @@ Vue.component('messages', {
   },
   methods: {
     getMessages() {
-      axios.get(`/api/messages/${this.selected}`, {
-          headers: {
-          Authorization: 'Bearer ' + this.$root.user.api_token //the token is a variable which holds the token
-          }
-      })
+      axios.get(`/api/messages/${this.selected}`)
       .then((response) => {
         this.$parent.messages = response.data
       })
@@ -156,11 +199,9 @@ Vue.component('input-control', {
   methods: {
     sendMessage() {
         axios.post(`/api/messages/${this.selected}`, {
-            api_token: this.$root.user.api_token,
             body: this.messageBox
         })
         .then((response) => {
-
             this.$parent.messages.push(response.data);
             this.messageBox = '';
         })
@@ -175,51 +216,14 @@ Vue.component('input-control', {
       </div>
       <div class='chat-buttons'>
         <button id='send' @click.prevent="sendMessage" >SEND</button>
-        <button></button>
       </div>
     </div>`
 })
 </script>
+
 <script>
-  dragElement(document.getElementById("chat"));
-    
-  function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(elmnt.id + "-navigation")) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + "-navigation").onmousedown = dragMouseDown;
-  }
 
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
-
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
   </script>
+
   </body>
 </html>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\PrivateMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
+use App\Models\User;
 use App\Events\NewPrivateMessage;
 class PrivateMessageController extends Controller
 {

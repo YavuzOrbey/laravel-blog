@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
-use App\User;
-use App\Comment;
-use App\Category;
+use App\Models\Post;
+use App\Models\User;
+use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +22,8 @@ class BlogController extends Controller
         if($user = User::where('username', $username)->first()){
             $posts = Post::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
             return view('blog.index', compact('posts', 'username'));
+        }else{
+            Log::info('Authenticated user: ' . $username);
         }
         abort(404);
     }
